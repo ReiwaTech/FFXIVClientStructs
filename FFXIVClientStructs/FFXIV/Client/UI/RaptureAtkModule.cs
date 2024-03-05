@@ -22,8 +22,8 @@ public unsafe partial struct RaptureAtkModule {
 
     [FieldOffset(0x11C20)] public RaptureAtkUnitManager RaptureAtkUnitManager;
 
-    [FieldOffset(0x1BBB8)] public int NameplateInfoCount;
-    [FieldOffset(0x1BBC0)] public NamePlateInfo NamePlateInfoArray; // 0-50, &NamePlateInfoArray[i]
+    [FieldOffset(0x1BBB8 - 0x10)] public int NameplateInfoCount;
+    [FieldOffset(0x1BBC0 - 0x10)] public NamePlateInfo NamePlateInfoArray; // 0-50, &NamePlateInfoArray[i]
 
     [FieldOffset(0x28F50)] public AtkTexture CharaViewDefaultBackgroundTexture; // "ui/common/CharacterBg.tex" (or _hr1 variant)
 
