@@ -21,7 +21,8 @@ namespace FFXIVClientStructs.FFXIV.Client.System.Framework;
 [GenerateInterop]
 [StructLayout(LayoutKind.Explicit, Size = 0x35D0)]
 public unsafe partial struct Framework {
-    [StaticAddress("49 8B DC 48 89 1D ?? ?? ?? ??", 6, true)]
+    //[StaticAddress("49 8B DC 48 89 1D ?? ?? ?? ??", 6, true)]
+    [StaticAddress("48 8B 1D ?? ?? ?? ?? 8B 7C 24 64", 3, true)]
     public static partial Framework* Instance();
 
     [FieldOffset(0x0010)] public SystemConfig SystemConfig;
