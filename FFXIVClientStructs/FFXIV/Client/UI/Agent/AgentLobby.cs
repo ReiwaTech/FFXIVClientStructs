@@ -115,7 +115,7 @@ public unsafe partial struct LobbyData {
 }
 
 [GenerateInterop]
-[StructLayout(LayoutKind.Explicit, Size = 0x6F8)]
+[StructLayout(LayoutKind.Explicit, Size = 0x718)]
 public unsafe partial struct CharaSelectCharacterEntry {
     [FieldOffset(0x8)] public ulong ContentId;
     [FieldOffset(0x10)] public byte Index;
