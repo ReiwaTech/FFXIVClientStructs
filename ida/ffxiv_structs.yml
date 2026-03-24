@@ -9201,11 +9201,12 @@ structs:
       name: this
     - type: unsigned int
       name: index
-  static_member_functions:
-  - signature: E8 ?? ?? ?? ?? 8B 54 2B
-    return_type: Client::Game::GcArmyManager*
-    name: Instance
-    parameters: []
+  static_members:
+  - signature: 48 8B 05 ?? ?? ?? ?? 0F 29 B4 24 ?? ?? ?? ?? 0F 29 BC 24 ?? ?? ?? ?? 44 0F 29 84 24 ?? ?? ?? ?? 48 85 C0
+    relative_follow_offsets:
+    - 3
+    is_pointer: True
+    return_type: Client::Game::GcArmyManager
 - type: Client::Game::GcArmyMember
   name: GcArmyMember
   namespace: Client.Game
@@ -10643,6 +10644,102 @@ structs:
     name: SourceObjectId
     offset: 8
   member_functions: []
+- type: Client::Game::Network::CrossRealmListingSegmentPacket::CrossRealmListing
+  name: CrossRealmListing
+  namespace: Client.Game.Network
+  union: False
+  size: 400
+  fields:
+  - type: unsigned __int64
+    name: ListingId
+    offset: 0
+  - type: unsigned __int64
+    name: AccountId
+    offset: 8
+  - type: unsigned __int64
+    name: ContentId
+    offset: 16
+  - type: unsigned int
+    name: Category
+    offset: 28
+  - type: unsigned __int16
+    name: Duty
+    offset: 32
+  - type: unsigned __int16
+    name: DutyType
+    offset: 34
+  - type: unsigned __int16
+    name: WorldId
+    offset: 46
+  - type: char
+    name: Objective
+    offset: 56
+  - type: char
+    name: BeginnersWelcome
+    offset: 57
+  - type: char
+    name: CompletionStatus
+    offset: 58
+  - type: char
+    name: DutyFinderSettings
+    offset: 59
+  - type: char
+    name: LootRule
+    offset: 60
+  - type: int
+    name: LastPatchHotfixTimestamp
+    offset: 64
+  - type: unsigned __int16
+    name: TimeLeft
+    offset: 68
+  - type: unsigned __int16
+    name: AvgItemLv
+    offset: 76
+  - type: unsigned __int16
+    name: HomeWorldId
+    offset: 78
+  - type: unsigned __int16
+    name: CurrentWorldId
+    offset: 80
+  - type: char
+    name: ClientLanguage
+    offset: 82
+  - type: char
+    name: TotalSlots
+    offset: 83
+  - type: char
+    name: SlotsFilled
+    offset: 84
+  - type: char
+    name: JoinConditionFlags
+    offset: 86
+  - type: char
+    name: IsAlliance
+    offset: 87
+  - type: char
+    name: NumberOfParties
+    offset: 88
+  - type: unsigned __int64
+    name: SlotFlags
+    offset: 96
+    size: 8
+    is_string: False
+  - type: char
+    name: JobsPresent
+    offset: 160
+    size: 8
+    is_string: False
+  - type: char
+    name: Name
+    offset: 168
+    size: 32
+    is_string: True
+  - type: char
+    name: Description
+    offset: 200
+    size: 192
+    is_string: True
+  member_functions: []
 - type: Client::Game::Network::InventoryItemCurrencyPacket
   name: InventoryItemCurrencyPacket
   namespace: Client.Game.Network
@@ -10741,6 +10838,25 @@ structs:
   - type: unsigned __int16
     name: TargetSlot
     offset: 14
+  member_functions: []
+- type: Client::Game::Network::ServerIpcSegmentHeader
+  name: ServerIpcSegmentHeader
+  namespace: Client.Game.Network
+  union: False
+  size: 16
+  fields:
+  - type: unsigned __int16
+    name: Magic
+    offset: 0
+  - type: unsigned __int16
+    name: OpCode
+    offset: 2
+  - type: unsigned __int16
+    name: ServerId
+    offset: 8
+  - type: int
+    name: Timestamp
+    offset: 12
   member_functions: []
 - type: Client::Game::Network::UpdateInventorySlotPacket
   name: UpdateInventorySlotPacket
@@ -17971,6 +18087,22 @@ structs:
     name: Status
     offset: 24
   member_functions: []
+- type: Client::UI::AddonLimitBreak::GaugeNode
+  name: GaugeNode
+  namespace: Client.UI
+  union: False
+  size: 24
+  fields:
+  - type: Component::GUI::AtkImageNode*
+    name: FrameLeftImageNode
+    offset: 0
+  - type: Component::GUI::AtkComponentBase*
+    name: ProgressComponent
+    offset: 8
+  - type: Component::GUI::AtkImageNode*
+    name: FrameRightImageNode
+    offset: 16
+  member_functions: []
 - type: Client::UI::AddonLotteryDaily::GameNumberRow
   name: GameNumberRow
   namespace: Client.UI
@@ -18084,17 +18216,6 @@ structs:
     name: IsBaked
     offset: 11
   member_functions: []
-- type: Client::UI::AddonNamePlate::BakePlateRenderer
-  name: BakePlateRenderer
-  namespace: Client.UI
-  union: False
-  size: 576
-  fields:
-  - type: char
-    name: DisableFixedFontResolution
-    offset: 560
-  virtual_functions: []
-  member_functions: []
 - type: Client::UI::AddonPartyList::PartyListMemberStruct
   name: PartyListMemberStruct
   namespace: Client.UI
@@ -18166,6 +18287,9 @@ structs:
   - type: Component::GUI::AtkNineGridNode*
     name: TargetGlow
     offset: 232
+  - type: Component::GUI::AtkCollisionNode*
+    name: Collision
+    offset: 240
   - type: char
     name: EmnityByte
     offset: 248
@@ -28204,6 +28328,22 @@ structs:
       name: valueCount
     - type: unsigned __int64
       name: eventKind
+  member_functions: []
+- type: Component::GUI::AtkRenderTexture
+  name: AtkRenderTexture
+  namespace: Component.GUI
+  union: False
+  size: 24
+  fields:
+  - type: Client::Graphics::Kernel::Texture*
+    name: Texture
+    offset: 8
+  - type: char
+    name: TextureScale
+    offset: 16
+  virtual_functions:
+  - name: Dtor
+    offset: 0
   member_functions: []
 - type: Component::GUI::AtkResourceRendererManager
   name: AtkResourceRendererManager
@@ -43250,6 +43390,23 @@ structs:
     name: Row3
     offset: 48
   member_functions: []
+- type: Client::UI::AddonNamePlate::BakePlateRenderer
+  name: BakePlateRenderer
+  namespace: Client.UI
+  union: False
+  size: 576
+  fields:
+  - type: Client::Graphics::Kernel::Texture*
+    name: Texture
+    offset: 176
+  - type: Component::GUI::AtkRenderTexture
+    name: RenderTexture
+    offset: 480
+  - type: char
+    name: DisableFixedFontResolution
+    offset: 560
+  virtual_functions: []
+  member_functions: []
 - type: Client::UI::AddonNamePlate::NamePlateObject
   name: NamePlateObject
   namespace: Client.UI
@@ -55299,6 +55456,28 @@ structs:
     - 3
     is_pointer: False
     return_type: Client::Game::NameCache
+- type: Client::Game::Network::CrossRealmListingSegmentPacket
+  name: CrossRealmListingSegmentPacket
+  namespace: Client.Game.Network
+  union: False
+  size: 1632
+  fields:
+  - type: Client::Game::Network::ServerIpcSegmentHeader
+    name: ServerIpcSegmentHeader
+    offset: 0
+    base: true
+  - type: unsigned int
+    name: Unk10
+    offset: 16
+  - type: unsigned __int16
+    name: SegmentIndex
+    offset: 28
+  - type: Client::Game::Network::CrossRealmListingSegmentPacket::CrossRealmListing
+    name: Entries
+    offset: 32
+    size: 4
+    is_string: False
+  member_functions: []
 - type: Client::Game::Network::PacketPlayerGearsetData
   name: PacketPlayerGearsetData
   namespace: Client.Game.Network
@@ -76840,6 +77019,7 @@ structs:
   - type: Common::Math::Vector3
     name: CameraOffsetTarget
     offset: 384
+  vtable_size: 616
   virtual_functions:
   - name: GetGameObjectId
     offset: 8
@@ -79490,7 +79670,7 @@ structs:
     name: AdvancedRequirementsPtr
     offset: 392
   - type: char
-    name: _UnkFlags
+    name: UnkFlags
     offset: 400
   virtual_functions:
   - name: ReceiveEvent
@@ -84501,7 +84681,7 @@ structs:
   size: 896
   fields:
   - type: int
-    name: _UnkLoadState
+    name: UnkLoadState
     offset: 4
   - type: int
     name: SelectedContentIndex
@@ -84513,7 +84693,7 @@ structs:
     name: CurrentContentIndex
     offset: 64
   - type: unsigned int
-    name: _UnkState
+    name: UnkState
     offset: 68
   - type: char
     name: CurrentActIndex
@@ -84541,7 +84721,7 @@ structs:
     size: 3
     is_string: False
   - type: float
-    name: _UnkFloat
+    name: UnkFloat
     offset: 892
   member_functions: []
 - type: Client::UI::Agent::HousingPortalPacket
@@ -85847,12 +86027,26 @@ structs:
       name: gearsetId
     - type: char
       name: glamourPlateId
+  - signature: E8 ?? ?? ?? ?? 89 84 24 ?? ?? ?? ?? 3D
+    return_type: int
+    name: FirstEmptyGearsetSlot
+    parameters:
+    - type: Client::UI::Misc::RaptureGearsetModule*
+      name: this
   - signature: E8 ?? ?? ?? ?? EB 07 8B D5 E8 ?? ?? ?? ?? 8B E8
     return_type: __int8
     name: CreateGearset
     parameters:
     - type: Client::UI::Misc::RaptureGearsetModule*
       name: this
+  - signature: 48 89 74 24 ?? 57 48 83 EC ?? 48 8B F9 48 63 F2 48 8D 0D
+    return_type: int
+    name: CreateGearsetInternal
+    parameters:
+    - type: Client::UI::Misc::RaptureGearsetModule*
+      name: this
+    - type: int
+      name: gearsetId
   - signature: E8 ?? ?? ?? ?? 80 BE ?? ?? ?? ?? ?? 74 ?? 48 8B 16
     return_type: void
     name: DeleteGearset
@@ -90588,10 +90782,10 @@ structs:
     size: 4
     is_string: False
   - type: unsigned __int16
-    name: _weeklyBingoStickers
+    name: WeeklyBingoStickers
     offset: 1856
   - type: unsigned int
-    name: _weeklyBingoFlags
+    name: WeeklyBingoFlags
     offset: 1860
   - type: char
     name: _weeklyBingoTaskStatus
@@ -92445,6 +92639,7 @@ structs:
   - type: Client::System::Input::GamepadInputData
     name: GamepadInputData
     offset: 120
+  vtable_size: 216
   virtual_functions:
   - name: SetVibration
     offset: 104
@@ -99524,7 +99719,7 @@ structs:
     offset: 0
     base: true
   - type: Common::Component::Excel::ExcelSheetWaiter
-    name: _sheetWaiter
+    name: SheetWaiter
     offset: 40
   - type: StdVector<__int64>
     name: TutorialRows
@@ -105803,6 +105998,7 @@ structs:
   - type: __int64
     name: CatchActionExpirationTime
     offset: 504
+  vtable_size: 2208
   virtual_functions:
   - name: PlayAnimation
     offset: 2200
@@ -111571,7 +111767,7 @@ structs:
     name: CurrentTabIndex
     offset: 216
   - type: Common::Component::Excel::ExcelSheetWaiter
-    name: _sheetWaiter
+    name: SheetWaiter
     offset: 232
   - type: StdVector<Client::UI::Agent::AgentCabinetWithdraw::CabinetWithdrawData::CurrentCategoryItemDetail>
     name: CurrentCategoryItems
@@ -112039,13 +112235,13 @@ structs:
     offset: 796
   - type: char
     name: DrawWeapon
-    offset: 797
+    offset: 799
   - type: char
     name: CharacterDisplayMode
-    offset: 798
+    offset: 800
   - type: Client::UI::Misc::RaptureGearsetModule::GearsetEntry*
     name: Gearset
-    offset: 800
+    offset: 808
   virtual_functions:
   - name: Dtor
     offset: 0
@@ -116611,229 +116807,6 @@ structs:
     size: 17
     is_string: False
   member_functions: []
-- type: Component::GUI::AtkComponentMap
-  name: AtkComponentMap
-  namespace: Component.GUI
-  union: False
-  size: 1056
-  fields:
-  - type: Component::GUI::AtkComponentBase
-    name: AtkComponentBase
-    offset: 0
-    base: true
-  - type: Component::GUI::AtkImageNode*
-    name: PlayerCone
-    offset: 224
-  - type: Component::GUI::AtkComponentNode*
-    name: MarkerTemplate5
-    offset: 232
-  - type: Component::GUI::AtkComponentNode*
-    name: MarkerTemplate6
-    offset: 240
-  - type: Component::GUI::AtkComponentNode*
-    name: MarkerTemplate4
-    offset: 248
-  - type: Component::GUI::AtkComponentNode*
-    name: MarkerTemplate3
-    offset: 256
-  - type: Component::GUI::AtkComponentNode*
-    name: MarkerTemplate2
-    offset: 264
-  - type: Component::GUI::AtkComponentNode*
-    name: MarkerTemplate8
-    offset: 272
-  - type: Component::GUI::AtkResourceRendererManager
-    name: ResourceRendererManager
-    offset: 312
-  - type: Component::GUI::AtkComponentMap::DiscoveryRenderer
-    name: m_DiscoveryRenderer
-    offset: 592
-  - type: float
-    name: MapScale
-    offset: 884
-  - type: float
-    name: MapOffsetX
-    offset: 900
-  - type: float
-    name: MapOffsetY
-    offset: 904
-  - type: float
-    name: MapWidth
-    offset: 908
-  - type: float
-    name: MapHeight
-    offset: 912
-  - type: unsigned int
-    name: NumMarkersType0
-    offset: 940
-  - type: unsigned int
-    name: NumMarkersType1
-    offset: 944
-  - type: unsigned int
-    name: NumMarkersType2
-    offset: 948
-  - type: unsigned int
-    name: NumMarkersType3
-    offset: 952
-  - type: unsigned int
-    name: NumMarkersType4
-    offset: 956
-  - type: Component::GUI::MapMarkerNodeContainer*
-    name: MarkerNodeContainerMemoryType0
-    offset: 960
-  - type: Component::GUI::MapMarkerNodeContainer*
-    name: MarkerNodeContainerMemoryType1
-    offset: 968
-  - type: Component::GUI::MapMarkerNodeContainer*
-    name: MarkerNodeContainerMemoryType2
-    offset: 976
-  - type: Component::GUI::MapMarkerNodeContainer*
-    name: MarkerNodeContainerMemoryType3
-    offset: 984
-  - type: Component::GUI::MapMarkerNodeContainer*
-    name: MarkerNodeContainerMemoryType4
-    offset: 992
-  - type: Component::GUI::AtkGrid
-    name: Grid
-    offset: 1000
-  virtual_functions:
-  - name: Dtor
-    offset: 0
-    return_type: Component::GUI::AtkEventListener*
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-    - type: char
-      name: freeFlags
-  - name: ReceiveGlobalEvent
-    offset: 8
-    return_type: void
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-    - type: Component::GUI::AtkEventType
-      name: eventType
-    - type: int
-      name: eventParam
-    - type: Component::GUI::AtkEvent*
-      name: atkEvent
-    - type: Component::GUI::AtkEventData*
-      name: atkEventData
-  - name: ReceiveEvent
-    offset: 16
-    return_type: void
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-    - type: Component::GUI::AtkEventType
-      name: eventType
-    - type: int
-      name: eventParam
-    - type: Component::GUI::AtkEvent*
-      name: atkEvent
-    - type: Component::GUI::AtkEventData*
-      name: atkEventData
-  - name: Initialize
-    offset: 24
-    return_type: void
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-  - name: Deinitialize
-    offset: 32
-    return_type: void
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-  - name: Update
-    offset: 40
-    return_type: void
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-    - type: float
-      name: delta
-  - name: Draw
-    offset: 56
-    return_type: void
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-  - name: Setup
-    offset: 64
-    return_type: void
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-  - name: SetEnabledState
-    offset: 80
-    return_type: void
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-    - type: char
-      name: enabled
-  - name: PlaySoundEffect
-    offset: 104
-    return_type: void
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-  - name: GetAtkResNode
-    offset: 112
-    return_type: Component::GUI::AtkResNode*
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-  - name: GetFocusNode
-    offset: 120
-    return_type: Component::GUI::AtkResNode*
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-  - name: InitializeFromComponentData
-    offset: 136
-    return_type: void
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-    - type: __int64
-      name: data
-  member_functions:
-  - signature: 48 89 5C 24 ?? 57 48 83 EC 20 33 FF C7 81 ?? ?? ?? ?? ?? ?? ?? ?? 48 8D 05
-    return_type: void
-    name: Ctor
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-  - signature: E8 ?? ?? ?? ?? 48 8B 4F ?? 0F 57 D2
-    return_type: void
-    name: SetMapScale
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-    - type: float
-      name: scale
-  - signature: E8 ?? ?? ?? ?? 48 8B 4F ?? 33 D2 48 8B 89
-    return_type: void
-    name: SetMapOffset
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-    - type: float
-      name: x
-    - type: float
-      name: y
-  - signature: E8 ?? ?? ?? ?? F3 41 0F 10 8E ?? ?? ?? ?? 48 8B CF
-    return_type: void
-    name: SetMapSize
-    parameters:
-    - type: Component::GUI::AtkComponentMap*
-      name: this
-    - type: float
-      name: width
-    - type: float
-      name: height
 - type: Component::GUI::AtkComponentTab
   name: AtkComponentTab
   namespace: Component.GUI
@@ -118491,7 +118464,7 @@ structs:
       name: classJobId
     - type: char
       name: negOneOnInvalid
-  - signature: E8 ?? ?? ?? ?? 23 B7
+  - signature: 40 57 48 83 EC ?? 8B FA 83 FA ?? 7D
     return_type: unsigned int
     name: GetClassJobIdForSavedHotbarIndex
     parameters:
@@ -119320,6 +119293,244 @@ structs:
       name: iconId
     - type: int
       name: int2
+- type: Component::GUI::AtkComponentMap
+  name: AtkComponentMap
+  namespace: Component.GUI
+  union: False
+  size: 1056
+  fields:
+  - type: Component::GUI::AtkComponentBase
+    name: AtkComponentBase
+    offset: 0
+    base: true
+  - type: Component::GUI::AtkImageNode*
+    name: MapFrameImage
+    offset: 192
+  - type: Component::GUI::AtkImageNode*
+    name: BaseMapImage
+    offset: 200
+  - type: Component::GUI::AtkImageNode*
+    name: DiscoveryPartsImage
+    offset: 208
+  - type: Component::GUI::AtkImageNode*
+    name: PlayerCone
+    offset: 224
+  - type: Component::GUI::AtkComponentNode*
+    name: MarkerTemplate5
+    offset: 232
+  - type: Component::GUI::AtkComponentNode*
+    name: MarkerTemplate6
+    offset: 240
+  - type: Component::GUI::AtkComponentNode*
+    name: MarkerTemplate4
+    offset: 248
+  - type: Component::GUI::AtkComponentNode*
+    name: MarkerTemplate3
+    offset: 256
+  - type: Component::GUI::AtkComponentNode*
+    name: MarkerTemplate2
+    offset: 264
+  - type: Component::GUI::AtkComponentNode*
+    name: MarkerTemplate8
+    offset: 272
+  - type: Component::GUI::AtkResourceRendererManager
+    name: ResourceRendererManager
+    offset: 312
+  - type: Component::GUI::AtkComponentMap::DiscoveryRenderer
+    name: m_DiscoveryRenderer
+    offset: 592
+  - type: Component::GUI::AtkRenderTexture
+    name: DiscoveryRenderTexture
+    offset: 616
+  - type: Client::Graphics::Kernel::Texture*
+    name: DiscoveryPartsTexture
+    offset: 784
+  - type: float
+    name: MapScale
+    offset: 884
+  - type: float
+    name: MapOffsetX
+    offset: 900
+  - type: float
+    name: MapOffsetY
+    offset: 904
+  - type: float
+    name: MapWidth
+    offset: 908
+  - type: float
+    name: MapHeight
+    offset: 912
+  - type: unsigned int
+    name: NumMarkersType0
+    offset: 940
+  - type: unsigned int
+    name: NumMarkersType1
+    offset: 944
+  - type: unsigned int
+    name: NumMarkersType2
+    offset: 948
+  - type: unsigned int
+    name: NumMarkersType3
+    offset: 952
+  - type: unsigned int
+    name: NumMarkersType4
+    offset: 956
+  - type: Component::GUI::MapMarkerNodeContainer*
+    name: MarkerNodeContainerMemoryType0
+    offset: 960
+  - type: Component::GUI::MapMarkerNodeContainer*
+    name: MarkerNodeContainerMemoryType1
+    offset: 968
+  - type: Component::GUI::MapMarkerNodeContainer*
+    name: MarkerNodeContainerMemoryType2
+    offset: 976
+  - type: Component::GUI::MapMarkerNodeContainer*
+    name: MarkerNodeContainerMemoryType3
+    offset: 984
+  - type: Component::GUI::MapMarkerNodeContainer*
+    name: MarkerNodeContainerMemoryType4
+    offset: 992
+  - type: Component::GUI::AtkGrid
+    name: Grid
+    offset: 1000
+  virtual_functions:
+  - name: Dtor
+    offset: 0
+    return_type: Component::GUI::AtkEventListener*
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+    - type: char
+      name: freeFlags
+  - name: ReceiveGlobalEvent
+    offset: 8
+    return_type: void
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+    - type: Component::GUI::AtkEventType
+      name: eventType
+    - type: int
+      name: eventParam
+    - type: Component::GUI::AtkEvent*
+      name: atkEvent
+    - type: Component::GUI::AtkEventData*
+      name: atkEventData
+  - name: ReceiveEvent
+    offset: 16
+    return_type: void
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+    - type: Component::GUI::AtkEventType
+      name: eventType
+    - type: int
+      name: eventParam
+    - type: Component::GUI::AtkEvent*
+      name: atkEvent
+    - type: Component::GUI::AtkEventData*
+      name: atkEventData
+  - name: Initialize
+    offset: 24
+    return_type: void
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+  - name: Deinitialize
+    offset: 32
+    return_type: void
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+  - name: Update
+    offset: 40
+    return_type: void
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+    - type: float
+      name: delta
+  - name: Draw
+    offset: 56
+    return_type: void
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+  - name: Setup
+    offset: 64
+    return_type: void
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+  - name: SetEnabledState
+    offset: 80
+    return_type: void
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+    - type: char
+      name: enabled
+  - name: PlaySoundEffect
+    offset: 104
+    return_type: void
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+  - name: GetAtkResNode
+    offset: 112
+    return_type: Component::GUI::AtkResNode*
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+  - name: GetFocusNode
+    offset: 120
+    return_type: Component::GUI::AtkResNode*
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+  - name: InitializeFromComponentData
+    offset: 136
+    return_type: void
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+    - type: __int64
+      name: data
+  member_functions:
+  - signature: 48 89 5C 24 ?? 57 48 83 EC 20 33 FF C7 81 ?? ?? ?? ?? ?? ?? ?? ?? 48 8D 05
+    return_type: void
+    name: Ctor
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+  - signature: E8 ?? ?? ?? ?? 48 8B 4F ?? 0F 57 D2
+    return_type: void
+    name: SetMapScale
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+    - type: float
+      name: scale
+  - signature: E8 ?? ?? ?? ?? 48 8B 4F ?? 33 D2 48 8B 89
+    return_type: void
+    name: SetMapOffset
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+    - type: float
+      name: x
+    - type: float
+      name: y
+  - signature: E8 ?? ?? ?? ?? F3 41 0F 10 8E ?? ?? ?? ?? 48 8B CF
+    return_type: void
+    name: SetMapSize
+    parameters:
+    - type: Component::GUI::AtkComponentMap*
+      name: this
+    - type: float
+      name: width
+    - type: float
+      name: height
 - type: Component::GUI::AtkUnitBase
   name: AtkUnitBase
   namespace: Component.GUI
@@ -120532,6 +120743,10 @@ structs:
     offset: 160
   - name: UnloadScdResource
     offset: 168
+  - name: ToggleUi
+    offset: 192
+  - name: IsUiFlagsSet
+    offset: 200
   member_functions:
   - signature: E8 ?? ?? ?? ?? 48 8B F8 41 B0 01
     return_type: Component::GUI::AtkUnitBase*
@@ -123044,6 +123259,432 @@ structs:
       name: this
     - type: char
       name: a2
+- type: Client::UI::AddonBagWidget
+  name: AddonBagWidget
+  namespace: Client.UI
+  union: False
+  size: 608
+  fields:
+  - type: Component::GUI::AtkUnitBase
+    name: AtkUnitBase
+    offset: 0
+    base: true
+  - type: Component::GUI::AtkComponentButton*
+    name: BagButtonComponents
+    offset: 568
+    size: 4
+    is_string: False
+  - type: Component::GUI::AtkComponentButton*
+    name: EquipmentButtonComponent
+    offset: 600
+  virtual_functions:
+  - name: Dtor
+    offset: 0
+    return_type: Component::GUI::AtkEventListener*
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: char
+      name: freeFlags
+  - name: ReceiveGlobalEvent
+    offset: 8
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: Component::GUI::AtkEventType
+      name: eventType
+    - type: int
+      name: eventParam
+    - type: Component::GUI::AtkEvent*
+      name: atkEvent
+    - type: Component::GUI::AtkEventData*
+      name: atkEventData
+  - name: ReceiveEvent
+    offset: 16
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: Component::GUI::AtkEventType
+      name: eventType
+    - type: int
+      name: eventParam
+    - type: Component::GUI::AtkEvent*
+      name: atkEvent
+    - type: Component::GUI::AtkEventData*
+      name: atkEventData
+  - name: Open
+    offset: 24
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: unsigned int
+      name: depthLayer
+  - name: Close
+    offset: 32
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: char
+      name: fireCallback
+  - name: Show
+    offset: 40
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: char
+      name: disableShowTransition
+    - type: unsigned int
+      name: unsetShowHideFlags
+  - name: Hide
+    offset: 48
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: char
+      name: disableHideTransition
+    - type: char
+      name: callCloseCallback
+    - type: unsigned int
+      name: setShowHideFlags
+  - name: SetPosition
+    offset: 56
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: __int16
+      name: x
+    - type: __int16
+      name: y
+  - name: SetX
+    offset: 64
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: __int16
+      name: value
+  - name: SetY
+    offset: 72
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: __int16
+      name: value
+  - name: GetX
+    offset: 80
+    return_type: __int16
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: GetY
+    offset: 88
+    return_type: __int16
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: GetPosition
+    offset: 96
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: __int16*
+      name: outX
+    - type: __int16*
+      name: outY
+  - name: SetAlpha
+    offset: 104
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: char
+      name: alpha
+  - name: SetScale
+    offset: 112
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: float
+      name: scale
+    - type: char
+      name: a3
+  - name: GetSize
+    offset: 120
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: __int16*
+      name: outWidth
+    - type: __int16*
+      name: outHeight
+    - type: char
+      name: scaled
+  - name: Hide2
+    offset: 128
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: SetScaleToHudLayoutScale
+    offset: 136
+    return_type: __int8
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: ShouldCollideWithWindow
+    offset: 144
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: Component::GUI::AtkCollisionNode*
+      name: collisionNode
+  - name: OnMove
+    offset: 160
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: HandleCursorTypeChange
+    offset: 176
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: ShouldIgnoreInputs
+    offset: 184
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: GetRootNode
+    offset: 192
+    return_type: Component::GUI::AtkResNode*
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: GetWindowBounds
+    offset: 216
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: Common::Math::Bounds*
+      name: outBounds
+  - name: GetRootBounds
+    offset: 240
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: Common::Math::Bounds*
+      name: outBounds
+  - name: SetDepthLayer
+    offset: 248
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: unsigned int
+      name: depthLayerIndex
+  - name: ShouldAllowCursorFocus
+    offset: 256
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: GetUnitBaseForFocus
+    offset: 280
+    return_type: Component::GUI::AtkUnitBase*
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: Focus
+    offset: 296
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: Initialize
+    offset: 328
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: Finalizer
+    offset: 336
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: Update
+    offset: 344
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: float
+      name: delta
+  - name: Draw
+    offset: 352
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: LoadUldResourceHandle
+    offset: 368
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: CheckWindowCollisionAtCoords
+    offset: 376
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: __int16
+      name: x
+    - type: __int16
+      name: y
+  - name: OnSetup
+    offset: 392
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: unsigned int
+      name: valueCount
+    - type: Component::GUI::AtkValue*
+      name: values
+  - name: OnRefresh
+    offset: 408
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: unsigned int
+      name: valueCount
+    - type: Component::GUI::AtkValue*
+      name: values
+  - name: OnRequestedUpdate
+    offset: 416
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: Component::GUI::NumberArrayData**
+      name: numberArrayData
+    - type: Component::GUI::StringArrayData**
+      name: stringArrayData
+  - name: FireCloseCallback
+    offset: 432
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: SetSizeFromConfig
+    offset: 448
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: float
+      name: width
+    - type: float
+      name: height
+  - name: HandleCustomInput
+    offset: 456
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: Component::GUI::AtkEventData::AtkInputData*
+      name: inputData
+  - name: OnFocusChange
+    offset: 472
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: char
+      name: isFocused
+  - name: OnScreenSizeChange
+    offset: 480
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: int
+      name: width
+    - type: int
+      name: height
+  - name: OnConfigLoaded
+    offset: 488
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: char
+      name: isInitialLoad
+  - name: OnMouseOver
+    offset: 496
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: OnMouseOut
+    offset: 504
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: IsFullyLoaded
+    offset: 528
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+  - name: PlaySoundEffect
+    offset: 536
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: int
+      name: soundEffectId
+  - name: HandleDPadInput
+    offset: 552
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: int
+      name: inputId
+    - type: char
+      name: a3
+  - name: HandleBackButtonInput
+    offset: 568
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonBagWidget*
+      name: this
+    - type: int
+      name: inputId
+    - type: char
+      name: a3
+  member_functions: []
 - type: Client::UI::AddonBank
   name: AddonBank
   namespace: Client.UI
@@ -126523,6 +127164,9 @@ structs:
     name: AtkUnitBase
     offset: 0
     base: true
+  - type: Component::GUI::AtkResNode*
+    name: CursorContainerNode
+    offset: 648
   virtual_functions:
   - name: Dtor
     offset: 0
@@ -128213,6 +128857,18 @@ structs:
     name: AtkUnitBase
     offset: 0
     base: true
+  - type: Component::GUI::AtkComponentGaugeBar*
+    name: ExperienceBarComponent
+    offset: 616
+  - type: Component::GUI::AtkTextNode*
+    name: ChainTextNode
+    offset: 624
+  - type: Component::GUI::AtkImageNode*
+    name: MoonIconNode
+    offset: 632
+  - type: Component::GUI::AtkImageNode*
+    name: SwordsIconNode
+    offset: 640
   - type: char
     name: ClassJob
     offset: 648
@@ -143505,6 +144161,857 @@ structs:
     - type: char
       name: a3
   member_functions: []
+- type: Client::UI::AddonMoney
+  name: AddonMoney
+  namespace: Client.UI
+  union: False
+  size: 608
+  fields:
+  - type: Component::GUI::AtkUnitBase
+    name: AtkUnitBase
+    offset: 0
+    base: true
+  - type: Component::GUI::AtkCounterNode*
+    name: CounterNode
+    offset: 568
+  - type: Component::GUI::AtkComponentButton*
+    name: CurrencyButtonComponent
+    offset: 576
+  - type: Component::GUI::AtkImageNode*
+    name: CurrencyImageNode
+    offset: 584
+  - type: char*
+    name: TooltipText
+    offset: 592
+  - type: unsigned int
+    name: IconId
+    offset: 600
+  virtual_functions:
+  - name: Dtor
+    offset: 0
+    return_type: Component::GUI::AtkEventListener*
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: char
+      name: freeFlags
+  - name: ReceiveGlobalEvent
+    offset: 8
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: Component::GUI::AtkEventType
+      name: eventType
+    - type: int
+      name: eventParam
+    - type: Component::GUI::AtkEvent*
+      name: atkEvent
+    - type: Component::GUI::AtkEventData*
+      name: atkEventData
+  - name: ReceiveEvent
+    offset: 16
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: Component::GUI::AtkEventType
+      name: eventType
+    - type: int
+      name: eventParam
+    - type: Component::GUI::AtkEvent*
+      name: atkEvent
+    - type: Component::GUI::AtkEventData*
+      name: atkEventData
+  - name: Open
+    offset: 24
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: unsigned int
+      name: depthLayer
+  - name: Close
+    offset: 32
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: char
+      name: fireCallback
+  - name: Show
+    offset: 40
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: char
+      name: disableShowTransition
+    - type: unsigned int
+      name: unsetShowHideFlags
+  - name: Hide
+    offset: 48
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: char
+      name: disableHideTransition
+    - type: char
+      name: callCloseCallback
+    - type: unsigned int
+      name: setShowHideFlags
+  - name: SetPosition
+    offset: 56
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: __int16
+      name: x
+    - type: __int16
+      name: y
+  - name: SetX
+    offset: 64
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: __int16
+      name: value
+  - name: SetY
+    offset: 72
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: __int16
+      name: value
+  - name: GetX
+    offset: 80
+    return_type: __int16
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: GetY
+    offset: 88
+    return_type: __int16
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: GetPosition
+    offset: 96
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: __int16*
+      name: outX
+    - type: __int16*
+      name: outY
+  - name: SetAlpha
+    offset: 104
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: char
+      name: alpha
+  - name: SetScale
+    offset: 112
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: float
+      name: scale
+    - type: char
+      name: a3
+  - name: GetSize
+    offset: 120
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: __int16*
+      name: outWidth
+    - type: __int16*
+      name: outHeight
+    - type: char
+      name: scaled
+  - name: Hide2
+    offset: 128
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: SetScaleToHudLayoutScale
+    offset: 136
+    return_type: __int8
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: ShouldCollideWithWindow
+    offset: 144
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: Component::GUI::AtkCollisionNode*
+      name: collisionNode
+  - name: OnMove
+    offset: 160
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: HandleCursorTypeChange
+    offset: 176
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: ShouldIgnoreInputs
+    offset: 184
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: GetRootNode
+    offset: 192
+    return_type: Component::GUI::AtkResNode*
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: GetWindowBounds
+    offset: 216
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: Common::Math::Bounds*
+      name: outBounds
+  - name: GetRootBounds
+    offset: 240
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: Common::Math::Bounds*
+      name: outBounds
+  - name: SetDepthLayer
+    offset: 248
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: unsigned int
+      name: depthLayerIndex
+  - name: ShouldAllowCursorFocus
+    offset: 256
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: GetUnitBaseForFocus
+    offset: 280
+    return_type: Component::GUI::AtkUnitBase*
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: Focus
+    offset: 296
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: Initialize
+    offset: 328
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: Finalizer
+    offset: 336
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: Update
+    offset: 344
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: float
+      name: delta
+  - name: Draw
+    offset: 352
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: LoadUldResourceHandle
+    offset: 368
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: CheckWindowCollisionAtCoords
+    offset: 376
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: __int16
+      name: x
+    - type: __int16
+      name: y
+  - name: OnSetup
+    offset: 392
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: unsigned int
+      name: valueCount
+    - type: Component::GUI::AtkValue*
+      name: values
+  - name: OnRefresh
+    offset: 408
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: unsigned int
+      name: valueCount
+    - type: Component::GUI::AtkValue*
+      name: values
+  - name: OnRequestedUpdate
+    offset: 416
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: Component::GUI::NumberArrayData**
+      name: numberArrayData
+    - type: Component::GUI::StringArrayData**
+      name: stringArrayData
+  - name: FireCloseCallback
+    offset: 432
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: SetSizeFromConfig
+    offset: 448
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: float
+      name: width
+    - type: float
+      name: height
+  - name: HandleCustomInput
+    offset: 456
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: Component::GUI::AtkEventData::AtkInputData*
+      name: inputData
+  - name: OnFocusChange
+    offset: 472
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: char
+      name: isFocused
+  - name: OnScreenSizeChange
+    offset: 480
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: int
+      name: width
+    - type: int
+      name: height
+  - name: OnConfigLoaded
+    offset: 488
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: char
+      name: isInitialLoad
+  - name: OnMouseOver
+    offset: 496
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: OnMouseOut
+    offset: 504
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: IsFullyLoaded
+    offset: 528
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+  - name: PlaySoundEffect
+    offset: 536
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: int
+      name: soundEffectId
+  - name: HandleDPadInput
+    offset: 552
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: int
+      name: inputId
+    - type: char
+      name: a3
+  - name: HandleBackButtonInput
+    offset: 568
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonMoney*
+      name: this
+    - type: int
+      name: inputId
+    - type: char
+      name: a3
+  member_functions: []
+- type: Client::UI::AddonNotification
+  name: AddonNotification
+  namespace: Client.UI
+  union: False
+  size: 4216
+  fields:
+  - type: Component::GUI::AtkUnitBase
+    name: AtkUnitBase
+    offset: 0
+    base: true
+  virtual_functions:
+  - name: Dtor
+    offset: 0
+    return_type: Component::GUI::AtkEventListener*
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: char
+      name: freeFlags
+  - name: ReceiveGlobalEvent
+    offset: 8
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: Component::GUI::AtkEventType
+      name: eventType
+    - type: int
+      name: eventParam
+    - type: Component::GUI::AtkEvent*
+      name: atkEvent
+    - type: Component::GUI::AtkEventData*
+      name: atkEventData
+  - name: ReceiveEvent
+    offset: 16
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: Component::GUI::AtkEventType
+      name: eventType
+    - type: int
+      name: eventParam
+    - type: Component::GUI::AtkEvent*
+      name: atkEvent
+    - type: Component::GUI::AtkEventData*
+      name: atkEventData
+  - name: Open
+    offset: 24
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: unsigned int
+      name: depthLayer
+  - name: Close
+    offset: 32
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: char
+      name: fireCallback
+  - name: Show
+    offset: 40
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: char
+      name: disableShowTransition
+    - type: unsigned int
+      name: unsetShowHideFlags
+  - name: Hide
+    offset: 48
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: char
+      name: disableHideTransition
+    - type: char
+      name: callCloseCallback
+    - type: unsigned int
+      name: setShowHideFlags
+  - name: SetPosition
+    offset: 56
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: __int16
+      name: x
+    - type: __int16
+      name: y
+  - name: SetX
+    offset: 64
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: __int16
+      name: value
+  - name: SetY
+    offset: 72
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: __int16
+      name: value
+  - name: GetX
+    offset: 80
+    return_type: __int16
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: GetY
+    offset: 88
+    return_type: __int16
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: GetPosition
+    offset: 96
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: __int16*
+      name: outX
+    - type: __int16*
+      name: outY
+  - name: SetAlpha
+    offset: 104
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: char
+      name: alpha
+  - name: SetScale
+    offset: 112
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: float
+      name: scale
+    - type: char
+      name: a3
+  - name: GetSize
+    offset: 120
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: __int16*
+      name: outWidth
+    - type: __int16*
+      name: outHeight
+    - type: char
+      name: scaled
+  - name: Hide2
+    offset: 128
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: SetScaleToHudLayoutScale
+    offset: 136
+    return_type: __int8
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: ShouldCollideWithWindow
+    offset: 144
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: Component::GUI::AtkCollisionNode*
+      name: collisionNode
+  - name: OnMove
+    offset: 160
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: HandleCursorTypeChange
+    offset: 176
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: ShouldIgnoreInputs
+    offset: 184
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: GetRootNode
+    offset: 192
+    return_type: Component::GUI::AtkResNode*
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: GetWindowBounds
+    offset: 216
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: Common::Math::Bounds*
+      name: outBounds
+  - name: GetRootBounds
+    offset: 240
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: Common::Math::Bounds*
+      name: outBounds
+  - name: SetDepthLayer
+    offset: 248
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: unsigned int
+      name: depthLayerIndex
+  - name: ShouldAllowCursorFocus
+    offset: 256
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: GetUnitBaseForFocus
+    offset: 280
+    return_type: Component::GUI::AtkUnitBase*
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: Focus
+    offset: 296
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: Initialize
+    offset: 328
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: Finalizer
+    offset: 336
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: Update
+    offset: 344
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: float
+      name: delta
+  - name: Draw
+    offset: 352
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: LoadUldResourceHandle
+    offset: 368
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: CheckWindowCollisionAtCoords
+    offset: 376
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: __int16
+      name: x
+    - type: __int16
+      name: y
+  - name: OnSetup
+    offset: 392
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: unsigned int
+      name: valueCount
+    - type: Component::GUI::AtkValue*
+      name: values
+  - name: OnRefresh
+    offset: 408
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: unsigned int
+      name: valueCount
+    - type: Component::GUI::AtkValue*
+      name: values
+  - name: OnRequestedUpdate
+    offset: 416
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: Component::GUI::NumberArrayData**
+      name: numberArrayData
+    - type: Component::GUI::StringArrayData**
+      name: stringArrayData
+  - name: FireCloseCallback
+    offset: 432
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: SetSizeFromConfig
+    offset: 448
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: float
+      name: width
+    - type: float
+      name: height
+  - name: HandleCustomInput
+    offset: 456
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: Component::GUI::AtkEventData::AtkInputData*
+      name: inputData
+  - name: OnFocusChange
+    offset: 472
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: char
+      name: isFocused
+  - name: OnScreenSizeChange
+    offset: 480
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: int
+      name: width
+    - type: int
+      name: height
+  - name: OnConfigLoaded
+    offset: 488
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: char
+      name: isInitialLoad
+  - name: OnMouseOver
+    offset: 496
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: OnMouseOut
+    offset: 504
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: IsFullyLoaded
+    offset: 528
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+  - name: PlaySoundEffect
+    offset: 536
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: int
+      name: soundEffectId
+  - name: HandleDPadInput
+    offset: 552
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: int
+      name: inputId
+    - type: char
+      name: a3
+  - name: HandleBackButtonInput
+    offset: 568
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNotification*
+      name: this
+    - type: int
+      name: inputId
+    - type: char
+      name: a3
+  member_functions: []
 - type: Client::UI::AddonParameterWidget
   name: AddonParameterWidget
   namespace: Client.UI
@@ -157233,6 +158740,14 @@ structs:
     name: AtkUnitBase
     offset: 0
     base: true
+  - type: Component::GUI::AtkComponentTextInput*
+    name: TextInput
+    offset: 608
+  - type: Component::GUI::AtkComponentTab*
+    name: ChatTabs
+    offset: 624
+    size: 5
+    is_string: False
   - type: char
     name: TabIndex
     offset: 684
@@ -157244,6 +158759,39 @@ structs:
     offset: 688
     size: 5
     is_string: False
+  - type: Component::GUI::AtkComponentDropDownList*
+    name: ChannelSelectDropDown
+    offset: 1208
+  - type: Component::GUI::AtkTextNode*
+    name: CurrentChannelTextNode
+    offset: 1288
+  - type: Component::GUI::AtkComponentNode*
+    name: SettingsComponentNode
+    offset: 1296
+  - type: Component::GUI::AtkComponentNode*
+    name: CloseComponentNode
+    offset: 1304
+  - type: Component::GUI::AtkNineGridNode*
+    name: BackgroundNode
+    offset: 1312
+  - type: Component::GUI::AtkComponentButton*
+    name: ResizeButton
+    offset: 1320
+  - type: Component::GUI::AtkComponentNode*
+    name: AddTabComponentNode
+    offset: 1328
+  - type: Component::GUI::AtkImageNode*
+    name: TabBarEndImageNode
+    offset: 1336
+  - type: Component::GUI::AtkImageNode*
+    name: TabBarStartImageNode
+    offset: 1344
+  - type: Component::GUI::AtkCollisionNode*
+    name: ControlsCollisionNode
+    offset: 1352
+  - type: Component::GUI::AtkStage*
+    name: AtkStage
+    offset: 1432
   virtual_functions:
   - name: Dtor
     offset: 0
@@ -161212,6 +162760,435 @@ structs:
       name: mode
     - type: int
       name: filter
+- type: Client::UI::AddonLimitBreak
+  name: AddonLimitBreak
+  namespace: Client.UI
+  union: False
+  size: 680
+  fields:
+  - type: Component::GUI::AtkUnitBase
+    name: AtkUnitBase
+    offset: 0
+    base: true
+  - type: Client::UI::AddonLimitBreak::GaugeNode
+    name: GaugeNodes
+    offset: 568
+    size: 3
+    is_string: False
+  - type: Component::GUI::AtkResNode*
+    name: GaugeContainerNode
+    offset: 640
+  - type: Component::GUI::AtkTextNode*
+    name: LimitBreakTextNode
+    offset: 648
+  virtual_functions:
+  - name: Dtor
+    offset: 0
+    return_type: Component::GUI::AtkEventListener*
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: char
+      name: freeFlags
+  - name: ReceiveGlobalEvent
+    offset: 8
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: Component::GUI::AtkEventType
+      name: eventType
+    - type: int
+      name: eventParam
+    - type: Component::GUI::AtkEvent*
+      name: atkEvent
+    - type: Component::GUI::AtkEventData*
+      name: atkEventData
+  - name: ReceiveEvent
+    offset: 16
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: Component::GUI::AtkEventType
+      name: eventType
+    - type: int
+      name: eventParam
+    - type: Component::GUI::AtkEvent*
+      name: atkEvent
+    - type: Component::GUI::AtkEventData*
+      name: atkEventData
+  - name: Open
+    offset: 24
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: unsigned int
+      name: depthLayer
+  - name: Close
+    offset: 32
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: char
+      name: fireCallback
+  - name: Show
+    offset: 40
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: char
+      name: disableShowTransition
+    - type: unsigned int
+      name: unsetShowHideFlags
+  - name: Hide
+    offset: 48
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: char
+      name: disableHideTransition
+    - type: char
+      name: callCloseCallback
+    - type: unsigned int
+      name: setShowHideFlags
+  - name: SetPosition
+    offset: 56
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: __int16
+      name: x
+    - type: __int16
+      name: y
+  - name: SetX
+    offset: 64
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: __int16
+      name: value
+  - name: SetY
+    offset: 72
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: __int16
+      name: value
+  - name: GetX
+    offset: 80
+    return_type: __int16
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: GetY
+    offset: 88
+    return_type: __int16
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: GetPosition
+    offset: 96
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: __int16*
+      name: outX
+    - type: __int16*
+      name: outY
+  - name: SetAlpha
+    offset: 104
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: char
+      name: alpha
+  - name: SetScale
+    offset: 112
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: float
+      name: scale
+    - type: char
+      name: a3
+  - name: GetSize
+    offset: 120
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: __int16*
+      name: outWidth
+    - type: __int16*
+      name: outHeight
+    - type: char
+      name: scaled
+  - name: Hide2
+    offset: 128
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: SetScaleToHudLayoutScale
+    offset: 136
+    return_type: __int8
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: ShouldCollideWithWindow
+    offset: 144
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: Component::GUI::AtkCollisionNode*
+      name: collisionNode
+  - name: OnMove
+    offset: 160
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: HandleCursorTypeChange
+    offset: 176
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: ShouldIgnoreInputs
+    offset: 184
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: GetRootNode
+    offset: 192
+    return_type: Component::GUI::AtkResNode*
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: GetWindowBounds
+    offset: 216
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: Common::Math::Bounds*
+      name: outBounds
+  - name: GetRootBounds
+    offset: 240
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: Common::Math::Bounds*
+      name: outBounds
+  - name: SetDepthLayer
+    offset: 248
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: unsigned int
+      name: depthLayerIndex
+  - name: ShouldAllowCursorFocus
+    offset: 256
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: GetUnitBaseForFocus
+    offset: 280
+    return_type: Component::GUI::AtkUnitBase*
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: Focus
+    offset: 296
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: Initialize
+    offset: 328
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: Finalizer
+    offset: 336
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: Update
+    offset: 344
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: float
+      name: delta
+  - name: Draw
+    offset: 352
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: LoadUldResourceHandle
+    offset: 368
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: CheckWindowCollisionAtCoords
+    offset: 376
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: __int16
+      name: x
+    - type: __int16
+      name: y
+  - name: OnSetup
+    offset: 392
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: unsigned int
+      name: valueCount
+    - type: Component::GUI::AtkValue*
+      name: values
+  - name: OnRefresh
+    offset: 408
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: unsigned int
+      name: valueCount
+    - type: Component::GUI::AtkValue*
+      name: values
+  - name: OnRequestedUpdate
+    offset: 416
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: Component::GUI::NumberArrayData**
+      name: numberArrayData
+    - type: Component::GUI::StringArrayData**
+      name: stringArrayData
+  - name: FireCloseCallback
+    offset: 432
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: SetSizeFromConfig
+    offset: 448
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: float
+      name: width
+    - type: float
+      name: height
+  - name: HandleCustomInput
+    offset: 456
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: Component::GUI::AtkEventData::AtkInputData*
+      name: inputData
+  - name: OnFocusChange
+    offset: 472
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: char
+      name: isFocused
+  - name: OnScreenSizeChange
+    offset: 480
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: int
+      name: width
+    - type: int
+      name: height
+  - name: OnConfigLoaded
+    offset: 488
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: char
+      name: isInitialLoad
+  - name: OnMouseOver
+    offset: 496
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: OnMouseOut
+    offset: 504
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: IsFullyLoaded
+    offset: 528
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+  - name: PlaySoundEffect
+    offset: 536
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: int
+      name: soundEffectId
+  - name: HandleDPadInput
+    offset: 552
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: int
+      name: inputId
+    - type: char
+      name: a3
+  - name: HandleBackButtonInput
+    offset: 568
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonLimitBreak*
+      name: this
+    - type: int
+      name: inputId
+    - type: char
+      name: a3
+  member_functions: []
 - type: Client::UI::AddonLookingForGroupDetail
   name: AddonLookingForGroupDetail
   namespace: Client.UI
@@ -162553,436 +164530,6 @@ structs:
     - type: char
       name: a3
   member_functions: []
-- type: Client::UI::AddonNamePlate
-  name: AddonNamePlate
-  namespace: Client.UI
-  union: False
-  size: 1168
-  fields:
-  - type: Component::GUI::AtkUnitBase
-    name: AtkUnitBase
-    offset: 0
-    base: true
-  - type: Client::UI::AddonNamePlate::BakePlateRenderer
-    name: BakePlate
-    offset: 576
-  - type: Client::UI::AddonNamePlate::NamePlateObject*
-    name: NamePlateObjectArray
-    offset: 1152
-  - type: char
-    name: DoFullUpdate
-    offset: 1160
-  - type: unsigned __int16
-    name: AlternatePartId
-    offset: 1162
-  virtual_functions:
-  - name: Dtor
-    offset: 0
-    return_type: Component::GUI::AtkEventListener*
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: char
-      name: freeFlags
-  - name: ReceiveGlobalEvent
-    offset: 8
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: Component::GUI::AtkEventType
-      name: eventType
-    - type: int
-      name: eventParam
-    - type: Component::GUI::AtkEvent*
-      name: atkEvent
-    - type: Component::GUI::AtkEventData*
-      name: atkEventData
-  - name: ReceiveEvent
-    offset: 16
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: Component::GUI::AtkEventType
-      name: eventType
-    - type: int
-      name: eventParam
-    - type: Component::GUI::AtkEvent*
-      name: atkEvent
-    - type: Component::GUI::AtkEventData*
-      name: atkEventData
-  - name: Open
-    offset: 24
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: unsigned int
-      name: depthLayer
-  - name: Close
-    offset: 32
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: char
-      name: fireCallback
-  - name: Show
-    offset: 40
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: char
-      name: disableShowTransition
-    - type: unsigned int
-      name: unsetShowHideFlags
-  - name: Hide
-    offset: 48
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: char
-      name: disableHideTransition
-    - type: char
-      name: callCloseCallback
-    - type: unsigned int
-      name: setShowHideFlags
-  - name: SetPosition
-    offset: 56
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: __int16
-      name: x
-    - type: __int16
-      name: y
-  - name: SetX
-    offset: 64
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: __int16
-      name: value
-  - name: SetY
-    offset: 72
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: __int16
-      name: value
-  - name: GetX
-    offset: 80
-    return_type: __int16
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: GetY
-    offset: 88
-    return_type: __int16
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: GetPosition
-    offset: 96
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: __int16*
-      name: outX
-    - type: __int16*
-      name: outY
-  - name: SetAlpha
-    offset: 104
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: char
-      name: alpha
-  - name: SetScale
-    offset: 112
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: float
-      name: scale
-    - type: char
-      name: a3
-  - name: GetSize
-    offset: 120
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: __int16*
-      name: outWidth
-    - type: __int16*
-      name: outHeight
-    - type: char
-      name: scaled
-  - name: Hide2
-    offset: 128
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: SetScaleToHudLayoutScale
-    offset: 136
-    return_type: __int8
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: ShouldCollideWithWindow
-    offset: 144
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: Component::GUI::AtkCollisionNode*
-      name: collisionNode
-  - name: OnMove
-    offset: 160
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: HandleCursorTypeChange
-    offset: 176
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: ShouldIgnoreInputs
-    offset: 184
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: GetRootNode
-    offset: 192
-    return_type: Component::GUI::AtkResNode*
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: GetWindowBounds
-    offset: 216
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: Common::Math::Bounds*
-      name: outBounds
-  - name: GetRootBounds
-    offset: 240
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: Common::Math::Bounds*
-      name: outBounds
-  - name: SetDepthLayer
-    offset: 248
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: unsigned int
-      name: depthLayerIndex
-  - name: ShouldAllowCursorFocus
-    offset: 256
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: GetUnitBaseForFocus
-    offset: 280
-    return_type: Component::GUI::AtkUnitBase*
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: Focus
-    offset: 296
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: Initialize
-    offset: 328
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: Finalizer
-    offset: 336
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: Update
-    offset: 344
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: float
-      name: delta
-  - name: Draw
-    offset: 352
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: LoadUldResourceHandle
-    offset: 368
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: CheckWindowCollisionAtCoords
-    offset: 376
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: __int16
-      name: x
-    - type: __int16
-      name: y
-  - name: OnSetup
-    offset: 392
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: unsigned int
-      name: valueCount
-    - type: Component::GUI::AtkValue*
-      name: values
-  - name: OnRefresh
-    offset: 408
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: unsigned int
-      name: valueCount
-    - type: Component::GUI::AtkValue*
-      name: values
-  - name: OnRequestedUpdate
-    offset: 416
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: Component::GUI::NumberArrayData**
-      name: numberArrayData
-    - type: Component::GUI::StringArrayData**
-      name: stringArrayData
-  - name: FireCloseCallback
-    offset: 432
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: SetSizeFromConfig
-    offset: 448
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: float
-      name: width
-    - type: float
-      name: height
-  - name: HandleCustomInput
-    offset: 456
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: Component::GUI::AtkEventData::AtkInputData*
-      name: inputData
-  - name: OnFocusChange
-    offset: 472
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: char
-      name: isFocused
-  - name: OnScreenSizeChange
-    offset: 480
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: int
-      name: width
-    - type: int
-      name: height
-  - name: OnConfigLoaded
-    offset: 488
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: char
-      name: isInitialLoad
-  - name: OnMouseOver
-    offset: 496
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: OnMouseOut
-    offset: 504
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: IsFullyLoaded
-    offset: 528
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-  - name: PlaySoundEffect
-    offset: 536
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: int
-      name: soundEffectId
-  - name: HandleDPadInput
-    offset: 552
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: int
-      name: inputId
-    - type: char
-      name: a3
-  - name: HandleBackButtonInput
-    offset: 568
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNamePlate*
-      name: this
-    - type: int
-      name: inputId
-    - type: char
-      name: a3
-  member_functions: []
 - type: Client::UI::AddonNeedGreed
   name: AddonNeedGreed
   namespace: Client.UI
@@ -163852,7 +165399,7 @@ structs:
   - type: Client::UI::AddonPartyList::PartyListMemberStruct
     name: TrustMembers
     offset: 2616
-    size: 7
+    size: 8
     is_string: False
   - type: Client::UI::AddonPartyList::PartyListMemberStruct
     name: Chocobo
@@ -168678,7 +170225,7 @@ structs:
     parameters:
     - type: Client::UI::Misc::CharaViewPortrait*
       name: this
-  - signature: E8 ?? ?? ?? ?? 0F B7 47 ?? 48 8D 4C 24 ?? 66 89 44 24 ?? 0F B7 47 ?? 66 89 44 24 ?? E8 ?? ?? ?? ?? 48 8D 4C 24 ?? 0F 28 F0 E8 ?? ?? ?? ?? 0F 28 C8 0F 28 D6 48 8B CB E8 ?? ?? ?? ?? 44 0F B6 4F ?? 48 8B CB 44 0F B6 47 ?? 0F B6 57 ?? E8 ?? ?? ?? ?? 48 8B 4B ?? 0F B6 47 ?? F3 0F 10 35 ?? ?? ?? ?? 88 83
+  - signature: E8 ?? ?? ?? ?? 0F B7 4F ?? E8 ?? ?? ?? ?? 0F B7 4F ?? 0F 28 F0 E8 ?? ?? ?? ?? 0F 28 C8 0F 28 D6 48 8B CB E8 ?? ?? ?? ?? 44 0F B6 4F ?? 48 8B CB 44 0F B6 47 ?? 0F B6 57 ?? E8 ?? ?? ?? ?? 48 8B 4B ?? 0F B6 47 ?? F3 0F 10 35 ?? ?? ?? ?? 88 83
     return_type: void
     name: SetHeadDirection
     parameters:
@@ -168774,6 +170321,7 @@ structs:
   - type: char
     name: IsUiFading
     offset: 40228
+  vtable_size: 344
   virtual_functions:
   - name: Dtor
     offset: 0
@@ -171093,9 +172641,95 @@ structs:
     name: AtkUnitBase
     offset: 0
     base: true
+  - type: Component::GUI::AtkResNode*
+    name: ContainerNode
+    offset: 568
   - type: Component::GUI::AtkComponentMap*
     name: ComponentMap
     offset: 576
+  - type: Component::GUI::AtkComponentButton*
+    name: WorldMapButton
+    offset: 600
+  - type: Component::GUI::AtkComponentButton*
+    name: ZoomInButton
+    offset: 608
+  - type: Component::GUI::AtkComponentButton*
+    name: ZoomOutButton
+    offset: 616
+  - type: Component::GUI::AtkComponentButton*
+    name: MapUpButton
+    offset: 624
+  - type: Component::GUI::AtkComponentCheckBox*
+    name: ShowMapMarkersCheckbox
+    offset: 632
+  - type: Component::GUI::AtkComponentCheckBox*
+    name: ShowMapTextCheckbox
+    offset: 640
+  - type: Component::GUI::AtkComponentCheckBox*
+    name: FollowPlayerCheckbox
+    offset: 648
+  - type: Component::GUI::AtkComponentCheckBox*
+    name: FadeWhenUnfocusedCheckbox
+    offset: 656
+  - type: Component::GUI::AtkComponentCheckBox*
+    name: LockMapCheckbox
+    offset: 664
+  - type: Component::GUI::AtkComponentSlider*
+    name: ZoomSlider
+    offset: 672
+  - type: Component::GUI::AtkResNode*
+    name: LocationContainerNode
+    offset: 680
+  - type: Component::GUI::AtkComponentDropDownList*
+    name: RegionDropDownList
+    offset: 688
+  - type: Component::GUI::AtkComponentDropDownList*
+    name: TerritoryDropDownList
+    offset: 696
+  - type: Component::GUI::AtkTextNode*
+    name: AreaTextNode
+    offset: 704
+  - type: Component::GUI::AtkTextNode*
+    name: SubAreaTextNode
+    offset: 712
+  - type: Component::GUI::AtkResNode*
+    name: LayerSelectionContainerNode
+    offset: 720
+  - type: Component::GUI::AtkComponentRadioButton*
+    name: WorldRadioButtons
+    offset: 728
+    size: 16
+    is_string: False
+  - type: Component::GUI::AtkResNode*
+    name: CurrentPositionContainerNode
+    offset: 856
+  - type: Component::GUI::AtkTextNode*
+    name: CurrentPositionTextNode
+    offset: 864
+  - type: Component::GUI::AtkResNode*
+    name: CursorPositionContainerNode
+    offset: 872
+  - type: Component::GUI::AtkTextNode*
+    name: CursorPositionTextNode
+    offset: 880
+  - type: Component::GUI::AtkComponentButton*
+    name: CloseButton
+    offset: 888
+  - type: Component::GUI::AtkComponentButton*
+    name: ResizeButton
+    offset: 896
+  - type: Component::GUI::AtkResNode*
+    name: TitleContainerNode
+    offset: 904
+  - type: Component::GUI::AtkTextNode*
+    name: TitleTextNode
+    offset: 912
+  - type: Component::GUI::AtkImageNode*
+    name: CrosshairImageNode
+    offset: 920
+  - type: Component::GUI::AtkNineGridNode*
+    name: LocationBackgroundNode
+    offset: 928
   - type: Client::UI::Atk2DAreaMap
     name: AreaMap
     offset: 936
@@ -175402,6 +177036,436 @@ structs:
     parameters:
     - type: Client::UI::AddonMinionMountBase*
       name: this
+- type: Client::UI::AddonNamePlate
+  name: AddonNamePlate
+  namespace: Client.UI
+  union: False
+  size: 1168
+  fields:
+  - type: Component::GUI::AtkUnitBase
+    name: AtkUnitBase
+    offset: 0
+    base: true
+  - type: Client::UI::AddonNamePlate::BakePlateRenderer
+    name: BakePlate
+    offset: 576
+  - type: Client::UI::AddonNamePlate::NamePlateObject*
+    name: NamePlateObjectArray
+    offset: 1152
+  - type: char
+    name: DoFullUpdate
+    offset: 1160
+  - type: unsigned __int16
+    name: AlternatePartId
+    offset: 1162
+  virtual_functions:
+  - name: Dtor
+    offset: 0
+    return_type: Component::GUI::AtkEventListener*
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: char
+      name: freeFlags
+  - name: ReceiveGlobalEvent
+    offset: 8
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: Component::GUI::AtkEventType
+      name: eventType
+    - type: int
+      name: eventParam
+    - type: Component::GUI::AtkEvent*
+      name: atkEvent
+    - type: Component::GUI::AtkEventData*
+      name: atkEventData
+  - name: ReceiveEvent
+    offset: 16
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: Component::GUI::AtkEventType
+      name: eventType
+    - type: int
+      name: eventParam
+    - type: Component::GUI::AtkEvent*
+      name: atkEvent
+    - type: Component::GUI::AtkEventData*
+      name: atkEventData
+  - name: Open
+    offset: 24
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: unsigned int
+      name: depthLayer
+  - name: Close
+    offset: 32
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: char
+      name: fireCallback
+  - name: Show
+    offset: 40
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: char
+      name: disableShowTransition
+    - type: unsigned int
+      name: unsetShowHideFlags
+  - name: Hide
+    offset: 48
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: char
+      name: disableHideTransition
+    - type: char
+      name: callCloseCallback
+    - type: unsigned int
+      name: setShowHideFlags
+  - name: SetPosition
+    offset: 56
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: __int16
+      name: x
+    - type: __int16
+      name: y
+  - name: SetX
+    offset: 64
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: __int16
+      name: value
+  - name: SetY
+    offset: 72
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: __int16
+      name: value
+  - name: GetX
+    offset: 80
+    return_type: __int16
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: GetY
+    offset: 88
+    return_type: __int16
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: GetPosition
+    offset: 96
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: __int16*
+      name: outX
+    - type: __int16*
+      name: outY
+  - name: SetAlpha
+    offset: 104
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: char
+      name: alpha
+  - name: SetScale
+    offset: 112
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: float
+      name: scale
+    - type: char
+      name: a3
+  - name: GetSize
+    offset: 120
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: __int16*
+      name: outWidth
+    - type: __int16*
+      name: outHeight
+    - type: char
+      name: scaled
+  - name: Hide2
+    offset: 128
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: SetScaleToHudLayoutScale
+    offset: 136
+    return_type: __int8
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: ShouldCollideWithWindow
+    offset: 144
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: Component::GUI::AtkCollisionNode*
+      name: collisionNode
+  - name: OnMove
+    offset: 160
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: HandleCursorTypeChange
+    offset: 176
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: ShouldIgnoreInputs
+    offset: 184
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: GetRootNode
+    offset: 192
+    return_type: Component::GUI::AtkResNode*
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: GetWindowBounds
+    offset: 216
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: Common::Math::Bounds*
+      name: outBounds
+  - name: GetRootBounds
+    offset: 240
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: Common::Math::Bounds*
+      name: outBounds
+  - name: SetDepthLayer
+    offset: 248
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: unsigned int
+      name: depthLayerIndex
+  - name: ShouldAllowCursorFocus
+    offset: 256
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: GetUnitBaseForFocus
+    offset: 280
+    return_type: Component::GUI::AtkUnitBase*
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: Focus
+    offset: 296
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: Initialize
+    offset: 328
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: Finalizer
+    offset: 336
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: Update
+    offset: 344
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: float
+      name: delta
+  - name: Draw
+    offset: 352
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: LoadUldResourceHandle
+    offset: 368
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: CheckWindowCollisionAtCoords
+    offset: 376
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: __int16
+      name: x
+    - type: __int16
+      name: y
+  - name: OnSetup
+    offset: 392
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: unsigned int
+      name: valueCount
+    - type: Component::GUI::AtkValue*
+      name: values
+  - name: OnRefresh
+    offset: 408
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: unsigned int
+      name: valueCount
+    - type: Component::GUI::AtkValue*
+      name: values
+  - name: OnRequestedUpdate
+    offset: 416
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: Component::GUI::NumberArrayData**
+      name: numberArrayData
+    - type: Component::GUI::StringArrayData**
+      name: stringArrayData
+  - name: FireCloseCallback
+    offset: 432
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: SetSizeFromConfig
+    offset: 448
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: float
+      name: width
+    - type: float
+      name: height
+  - name: HandleCustomInput
+    offset: 456
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: Component::GUI::AtkEventData::AtkInputData*
+      name: inputData
+  - name: OnFocusChange
+    offset: 472
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: char
+      name: isFocused
+  - name: OnScreenSizeChange
+    offset: 480
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: int
+      name: width
+    - type: int
+      name: height
+  - name: OnConfigLoaded
+    offset: 488
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: char
+      name: isInitialLoad
+  - name: OnMouseOver
+    offset: 496
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: OnMouseOut
+    offset: 504
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: IsFullyLoaded
+    offset: 528
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+  - name: PlaySoundEffect
+    offset: 536
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: int
+      name: soundEffectId
+  - name: HandleDPadInput
+    offset: 552
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: int
+      name: inputId
+    - type: char
+      name: a3
+  - name: HandleBackButtonInput
+    offset: 568
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNamePlate*
+      name: this
+    - type: int
+      name: inputId
+    - type: char
+      name: a3
+  member_functions: []
 - type: Client::UI::AddonOrnamentNoteBook
   name: AddonOrnamentNoteBook
   namespace: Client.UI
@@ -180882,15 +182946,33 @@ structs:
     name: AtkUnitBase
     offset: 0
     base: true
+  - type: Component::GUI::AtkResNode*
+    name: ContainerNode
+    offset: 568
   - type: Component::GUI::AtkComponentButton*
     name: ResizeButton
     offset: 576
   - type: Component::GUI::AtkCollisionNode*
     name: PanelCollisionNode
     offset: 584
+  - type: Component::GUI::AtkCollisionNode*
+    name: TabCollisionNode
+    offset: 592
+  - type: Component::GUI::AtkImageNode*
+    name: TabStartImageNode
+    offset: 600
+  - type: Component::GUI::AtkTextNode*
+    name: TabLabelNode
+    offset: 608
+  - type: Component::GUI::AtkComponentBase*
+    name: ChatComponent
+    offset: 616
   - type: Component::GUI::AtkTextNode*
     name: ChatText
     offset: 624
+  - type: Component::GUI::AtkComponentBase*
+    name: TabComponent
+    offset: 632
   - type: Client::UI::LogViewer
     name: LogViewer
     offset: 640
@@ -185328,478 +187410,6 @@ structs:
     - type: char
       name: a3
   member_functions: []
-- type: Client::UI::AddonNaviMap
-  name: AddonNaviMap
-  namespace: Client.UI
-  union: False
-  size: 14992
-  fields:
-  - type: Component::GUI::AtkUnitBase
-    name: AtkUnitBase
-    offset: 0
-    base: true
-  - type: Client::UI::Atk2DNaviMap
-    name: NaviMap
-    offset: 568
-  - type: Component::GUI::AtkResNode*
-    name: PlayerCone
-    offset: 5512
-  - type: Component::GUI::AtkCollisionNode*
-    name: MainCollision
-    offset: 5520
-  - type: Component::GUI::AtkResNode*
-    name: Coords
-    offset: 5528
-  - type: Component::GUI::AtkTextNode*
-    name: CoordsText
-    offset: 5536
-  - type: Component::GUI::AtkImageNode*
-    name: Sun
-    offset: 5544
-  - type: Component::GUI::AtkImageNode*
-    name: WeatherIcon
-    offset: 5552
-  - type: Component::GUI::AtkCollisionNode*
-    name: WeatherIconCollision
-    offset: 5560
-  - type: Component::GUI::AtkComponentCheckBox*
-    name: LockNorthCheckbox
-    offset: 5568
-  - type: Component::GUI::AtkComponentButton*
-    name: ZoomOutButton
-    offset: 5576
-  - type: Component::GUI::AtkComponentButton*
-    name: ZoomInButton
-    offset: 5584
-  - type: Component::GUI::AtkComponentNode*
-    name: MapBase
-    offset: 5592
-  - type: Component::GUI::AtkImageNode*
-    name: MapImage
-    offset: 5600
-  - type: Component::GUI::AtkUldAsset*
-    name: MapImageAsset
-    offset: 5608
-  - type: Component::GUI::AtkImageNode*
-    name: Mask
-    offset: 5616
-  - type: float
-    name: MarkerPositionScaling
-    offset: 14968
-  - type: __int16
-    name: MapTextureWidth
-    offset: 14972
-  - type: __int16
-    name: MapTextureHeight
-    offset: 14974
-  virtual_functions:
-  - name: Dtor
-    offset: 0
-    return_type: Component::GUI::AtkEventListener*
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: char
-      name: freeFlags
-  - name: ReceiveGlobalEvent
-    offset: 8
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: Component::GUI::AtkEventType
-      name: eventType
-    - type: int
-      name: eventParam
-    - type: Component::GUI::AtkEvent*
-      name: atkEvent
-    - type: Component::GUI::AtkEventData*
-      name: atkEventData
-  - name: ReceiveEvent
-    offset: 16
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: Component::GUI::AtkEventType
-      name: eventType
-    - type: int
-      name: eventParam
-    - type: Component::GUI::AtkEvent*
-      name: atkEvent
-    - type: Component::GUI::AtkEventData*
-      name: atkEventData
-  - name: Open
-    offset: 24
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: unsigned int
-      name: depthLayer
-  - name: Close
-    offset: 32
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: char
-      name: fireCallback
-  - name: Show
-    offset: 40
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: char
-      name: disableShowTransition
-    - type: unsigned int
-      name: unsetShowHideFlags
-  - name: Hide
-    offset: 48
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: char
-      name: disableHideTransition
-    - type: char
-      name: callCloseCallback
-    - type: unsigned int
-      name: setShowHideFlags
-  - name: SetPosition
-    offset: 56
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: __int16
-      name: x
-    - type: __int16
-      name: y
-  - name: SetX
-    offset: 64
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: __int16
-      name: value
-  - name: SetY
-    offset: 72
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: __int16
-      name: value
-  - name: GetX
-    offset: 80
-    return_type: __int16
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: GetY
-    offset: 88
-    return_type: __int16
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: GetPosition
-    offset: 96
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: __int16*
-      name: outX
-    - type: __int16*
-      name: outY
-  - name: SetAlpha
-    offset: 104
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: char
-      name: alpha
-  - name: SetScale
-    offset: 112
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: float
-      name: scale
-    - type: char
-      name: a3
-  - name: GetSize
-    offset: 120
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: __int16*
-      name: outWidth
-    - type: __int16*
-      name: outHeight
-    - type: char
-      name: scaled
-  - name: Hide2
-    offset: 128
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: SetScaleToHudLayoutScale
-    offset: 136
-    return_type: __int8
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: ShouldCollideWithWindow
-    offset: 144
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: Component::GUI::AtkCollisionNode*
-      name: collisionNode
-  - name: OnMove
-    offset: 160
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: HandleCursorTypeChange
-    offset: 176
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: ShouldIgnoreInputs
-    offset: 184
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: GetRootNode
-    offset: 192
-    return_type: Component::GUI::AtkResNode*
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: GetWindowBounds
-    offset: 216
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: Common::Math::Bounds*
-      name: outBounds
-  - name: GetRootBounds
-    offset: 240
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: Common::Math::Bounds*
-      name: outBounds
-  - name: SetDepthLayer
-    offset: 248
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: unsigned int
-      name: depthLayerIndex
-  - name: ShouldAllowCursorFocus
-    offset: 256
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: GetUnitBaseForFocus
-    offset: 280
-    return_type: Component::GUI::AtkUnitBase*
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: Focus
-    offset: 296
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: Initialize
-    offset: 328
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: Finalizer
-    offset: 336
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: Update
-    offset: 344
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: float
-      name: delta
-  - name: Draw
-    offset: 352
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: LoadUldResourceHandle
-    offset: 368
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: CheckWindowCollisionAtCoords
-    offset: 376
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: __int16
-      name: x
-    - type: __int16
-      name: y
-  - name: OnSetup
-    offset: 392
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: unsigned int
-      name: valueCount
-    - type: Component::GUI::AtkValue*
-      name: values
-  - name: OnRefresh
-    offset: 408
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: unsigned int
-      name: valueCount
-    - type: Component::GUI::AtkValue*
-      name: values
-  - name: OnRequestedUpdate
-    offset: 416
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: Component::GUI::NumberArrayData**
-      name: numberArrayData
-    - type: Component::GUI::StringArrayData**
-      name: stringArrayData
-  - name: FireCloseCallback
-    offset: 432
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: SetSizeFromConfig
-    offset: 448
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: float
-      name: width
-    - type: float
-      name: height
-  - name: HandleCustomInput
-    offset: 456
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: Component::GUI::AtkEventData::AtkInputData*
-      name: inputData
-  - name: OnFocusChange
-    offset: 472
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: char
-      name: isFocused
-  - name: OnScreenSizeChange
-    offset: 480
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: int
-      name: width
-    - type: int
-      name: height
-  - name: OnConfigLoaded
-    offset: 488
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: char
-      name: isInitialLoad
-  - name: OnMouseOver
-    offset: 496
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: OnMouseOut
-    offset: 504
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: IsFullyLoaded
-    offset: 528
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-  - name: PlaySoundEffect
-    offset: 536
-    return_type: void
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: int
-      name: soundEffectId
-  - name: HandleDPadInput
-    offset: 552
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: int
-      name: inputId
-    - type: char
-      name: a3
-  - name: HandleBackButtonInput
-    offset: 568
-    return_type: char
-    parameters:
-    - type: Client::UI::AddonNaviMap*
-      name: this
-    - type: int
-      name: inputId
-    - type: char
-      name: a3
-  member_functions: []
 - type: Client::UI::AddonPvPCharacter
   name: AddonPvPCharacter
   namespace: Client.UI
@@ -186590,9 +188200,11 @@ structs:
     name: LeveDirector
     offset: 0
     base: true
-  - type: Component::Exd::Sheets::BattleLeve
-    name: BattleLeveSheet
+  - type: unsigned __int16
+    name: Time
     offset: 1216
+    size: 8
+    is_string: False
   - type: unsigned __int16
     name: RecommendedLevel
     offset: 1648
@@ -188192,6 +189804,481 @@ structs:
       name: numberArray
     - type: Component::GUI::StringArrayData*
       name: stringArray
+- type: Client::UI::AddonNaviMap
+  name: AddonNaviMap
+  namespace: Client.UI
+  union: False
+  size: 14992
+  fields:
+  - type: Component::GUI::AtkUnitBase
+    name: AtkUnitBase
+    offset: 0
+    base: true
+  - type: Client::UI::Atk2DNaviMap
+    name: NaviMap
+    offset: 568
+  - type: Component::GUI::AtkResNode*
+    name: PlayerCone
+    offset: 5512
+  - type: Component::GUI::AtkCollisionNode*
+    name: MainCollision
+    offset: 5520
+  - type: Component::GUI::AtkResNode*
+    name: Coords
+    offset: 5528
+  - type: Component::GUI::AtkTextNode*
+    name: CoordsText
+    offset: 5536
+  - type: Component::GUI::AtkImageNode*
+    name: Sun
+    offset: 5544
+  - type: Component::GUI::AtkImageNode*
+    name: WeatherIcon
+    offset: 5552
+  - type: Component::GUI::AtkCollisionNode*
+    name: WeatherIconCollision
+    offset: 5560
+  - type: Component::GUI::AtkComponentCheckBox*
+    name: LockNorthCheckbox
+    offset: 5568
+  - type: Component::GUI::AtkComponentButton*
+    name: ZoomOutButton
+    offset: 5576
+  - type: Component::GUI::AtkComponentButton*
+    name: ZoomInButton
+    offset: 5584
+  - type: Component::GUI::AtkComponentNode*
+    name: MapBase
+    offset: 5592
+  - type: Component::GUI::AtkImageNode*
+    name: MapImage
+    offset: 5600
+  - type: Component::GUI::AtkUldAsset*
+    name: MapImageAsset
+    offset: 5608
+  - type: Component::GUI::AtkImageNode*
+    name: Mask
+    offset: 5616
+  - type: Component::GUI::AtkRenderTexture
+    name: RenderTexture
+    offset: 14512
+  - type: float
+    name: MarkerPositionScaling
+    offset: 14968
+  - type: __int16
+    name: MapTextureWidth
+    offset: 14972
+  - type: __int16
+    name: MapTextureHeight
+    offset: 14974
+  virtual_functions:
+  - name: Dtor
+    offset: 0
+    return_type: Component::GUI::AtkEventListener*
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: char
+      name: freeFlags
+  - name: ReceiveGlobalEvent
+    offset: 8
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: Component::GUI::AtkEventType
+      name: eventType
+    - type: int
+      name: eventParam
+    - type: Component::GUI::AtkEvent*
+      name: atkEvent
+    - type: Component::GUI::AtkEventData*
+      name: atkEventData
+  - name: ReceiveEvent
+    offset: 16
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: Component::GUI::AtkEventType
+      name: eventType
+    - type: int
+      name: eventParam
+    - type: Component::GUI::AtkEvent*
+      name: atkEvent
+    - type: Component::GUI::AtkEventData*
+      name: atkEventData
+  - name: Open
+    offset: 24
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: unsigned int
+      name: depthLayer
+  - name: Close
+    offset: 32
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: char
+      name: fireCallback
+  - name: Show
+    offset: 40
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: char
+      name: disableShowTransition
+    - type: unsigned int
+      name: unsetShowHideFlags
+  - name: Hide
+    offset: 48
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: char
+      name: disableHideTransition
+    - type: char
+      name: callCloseCallback
+    - type: unsigned int
+      name: setShowHideFlags
+  - name: SetPosition
+    offset: 56
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: __int16
+      name: x
+    - type: __int16
+      name: y
+  - name: SetX
+    offset: 64
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: __int16
+      name: value
+  - name: SetY
+    offset: 72
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: __int16
+      name: value
+  - name: GetX
+    offset: 80
+    return_type: __int16
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: GetY
+    offset: 88
+    return_type: __int16
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: GetPosition
+    offset: 96
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: __int16*
+      name: outX
+    - type: __int16*
+      name: outY
+  - name: SetAlpha
+    offset: 104
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: char
+      name: alpha
+  - name: SetScale
+    offset: 112
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: float
+      name: scale
+    - type: char
+      name: a3
+  - name: GetSize
+    offset: 120
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: __int16*
+      name: outWidth
+    - type: __int16*
+      name: outHeight
+    - type: char
+      name: scaled
+  - name: Hide2
+    offset: 128
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: SetScaleToHudLayoutScale
+    offset: 136
+    return_type: __int8
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: ShouldCollideWithWindow
+    offset: 144
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: Component::GUI::AtkCollisionNode*
+      name: collisionNode
+  - name: OnMove
+    offset: 160
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: HandleCursorTypeChange
+    offset: 176
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: ShouldIgnoreInputs
+    offset: 184
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: GetRootNode
+    offset: 192
+    return_type: Component::GUI::AtkResNode*
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: GetWindowBounds
+    offset: 216
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: Common::Math::Bounds*
+      name: outBounds
+  - name: GetRootBounds
+    offset: 240
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: Common::Math::Bounds*
+      name: outBounds
+  - name: SetDepthLayer
+    offset: 248
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: unsigned int
+      name: depthLayerIndex
+  - name: ShouldAllowCursorFocus
+    offset: 256
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: GetUnitBaseForFocus
+    offset: 280
+    return_type: Component::GUI::AtkUnitBase*
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: Focus
+    offset: 296
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: Initialize
+    offset: 328
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: Finalizer
+    offset: 336
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: Update
+    offset: 344
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: float
+      name: delta
+  - name: Draw
+    offset: 352
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: LoadUldResourceHandle
+    offset: 368
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: CheckWindowCollisionAtCoords
+    offset: 376
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: __int16
+      name: x
+    - type: __int16
+      name: y
+  - name: OnSetup
+    offset: 392
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: unsigned int
+      name: valueCount
+    - type: Component::GUI::AtkValue*
+      name: values
+  - name: OnRefresh
+    offset: 408
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: unsigned int
+      name: valueCount
+    - type: Component::GUI::AtkValue*
+      name: values
+  - name: OnRequestedUpdate
+    offset: 416
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: Component::GUI::NumberArrayData**
+      name: numberArrayData
+    - type: Component::GUI::StringArrayData**
+      name: stringArrayData
+  - name: FireCloseCallback
+    offset: 432
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: SetSizeFromConfig
+    offset: 448
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: float
+      name: width
+    - type: float
+      name: height
+  - name: HandleCustomInput
+    offset: 456
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: Component::GUI::AtkEventData::AtkInputData*
+      name: inputData
+  - name: OnFocusChange
+    offset: 472
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: char
+      name: isFocused
+  - name: OnScreenSizeChange
+    offset: 480
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: int
+      name: width
+    - type: int
+      name: height
+  - name: OnConfigLoaded
+    offset: 488
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: char
+      name: isInitialLoad
+  - name: OnMouseOver
+    offset: 496
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: OnMouseOut
+    offset: 504
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: IsFullyLoaded
+    offset: 528
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+  - name: PlaySoundEffect
+    offset: 536
+    return_type: void
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: int
+      name: soundEffectId
+  - name: HandleDPadInput
+    offset: 552
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: int
+      name: inputId
+    - type: char
+      name: a3
+  - name: HandleBackButtonInput
+    offset: 568
+    return_type: char
+    parameters:
+    - type: Client::UI::AddonNaviMap*
+      name: this
+    - type: int
+      name: inputId
+    - type: char
+      name: a3
+  member_functions: []
 - type: Client::UI::AddonSocial
   name: AddonSocial
   namespace: Client.UI
@@ -189646,8 +191733,8 @@ structs:
     offset: 72
     size: 14
     is_string: False
-  - type: char
-    name: IsChildAddonOpen
+  - type: unsigned int
+    name: ChildAddonId
     offset: 276
   - type: char
     name: GearsetIdOfDisplayAddon
@@ -189663,6 +191750,9 @@ structs:
   - type: Client::UI::Agent::AgentGearSet::GearsetCharaView
     name: CharaView
     offset: 2176
+  - type: Client::Graphics::Kernel::Texture*
+    name: GearsetPreviewTexture
+    offset: 2992
   - type: StdVector<int>
     name: GearSetIds
     offset: 3000
@@ -189842,6 +191932,14 @@ structs:
       name: this
     - type: int
       name: gearsetId
+  - signature: E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 41 B0 ?? 8B D6 48 8B CB
+    return_type: char
+    name: ReassignGearSetNumber
+    parameters:
+    - type: Client::UI::Agent::AgentGearSet*
+      name: this
+    - type: int
+      name: gearsetId
   - signature: E8 ?? ?? ?? ?? 33 C0 E9 ?? ?? ?? ?? 48 8B 03 48 8B CB FF 50 ?? 48 8B C8 8B D7 E8 ?? ?? ?? ?? 84 C0
     return_type: void
     name: UpdateGearsetIfExistsOrCreateNew
@@ -189856,6 +191954,32 @@ structs:
     parameters:
     - type: Client::UI::Agent::AgentGearSet*
       name: this
+  - signature: E8 ?? ?? ?? ?? 33 C0 E9 ?? ?? ?? ?? 8B D7
+    return_type: int
+    name: CreateGearset
+    parameters:
+    - type: Client::UI::Agent::AgentGearSet*
+      name: this
+    - type: int
+      name: gearsetId
+    - type: char
+      name: createAtFirstEmpty
+  - signature: 40 56 41 54 41 56 48 83 EC ?? 48 8B 05
+    return_type: char
+    name: DeleteGearset
+    parameters:
+    - type: Client::UI::Agent::AgentGearSet*
+      name: this
+    - type: int
+      name: gearsetId
+  - signature: E8 ?? ?? ?? ?? 33 C0 EB ?? 83 F8
+    return_type: void
+    name: OpenGearsetViewer
+    parameters:
+    - type: Client::UI::Agent::AgentGearSet*
+      name: this
+    - type: int
+      name: gearsetId
 - type: Client::UI::Agent::AgentInspect
   name: AgentInspect
   namespace: Client.UI.Agent
@@ -207387,7 +209511,7 @@ structs:
     - type: Client::Game::InstanceContent::InstanceContentDirector*
       name: this
   - name: HandleGMCommand
-    offset: 3176
+    offset: 3216
   member_functions: []
 - type: Client::Game::InstanceContent::PublicContentDirector
   name: PublicContentDirector
@@ -213389,6 +215513,7 @@ structs:
   - type: char
     name: SoundFlags
     offset: 9067
+  vtable_size: 696
   virtual_functions:
   - name: GetStatusManager
     offset: 616
@@ -215766,6 +217891,7 @@ structs:
   - type: Client::UI::UIInputModule
     name: UIInputModule
     offset: 1043824
+  vtable_size: 1984
   virtual_functions:
   - name: ExitGame
     offset: 32
