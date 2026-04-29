@@ -185,6 +185,7 @@ functions:
   0x14080CD80: GetItemName # (uint itemId, byte itemKind, Component::Exd::Sheets::Item* itemRow, bool withLinkPrefix) -> byte*
   0x14080CE70: GetEventItemName
   0x14080D000: GetItemIcon # (uint itemId, Component::Exd::Sheets::Item* itemRow) -> uint
+  0x140819680: GetUIConstOrDefault
   0x14082E550: LoadAreaVfx
   0x140859410: IsCompanySealItemId
   0x140859520: GetTomestonesItem
@@ -2948,7 +2949,8 @@ classes:
       0x140B00CC0: GetPenaltyTimestamp
       0x140B00CD0: SetPenaltyTimestamp
       0x140B00D40: SetOrnamentUnlocked
-      0x140B00DE0: IsGlassesStylesUnlocked
+      0x140B00DE0: IsGlassesStyleUnlocked
+      0x140B00E80: SetGlassesStyleUnlocked
       0x140BA3D00: SetDesynthesisLevels
       0x140B00B90: SetDesynthesisLevelForClassJob
       0x140B00E20: IsGlassesUnlocked
@@ -3853,6 +3855,7 @@ classes:
       0x140403E60: PlaySoundEffect
       0x140403EE0: PlaySoundEffect2
       0x140404270: PlayCutsceneVoSound
+      0x1404058B0: PlayWeatherSound
       0x140406250: ToggleForceFeedback
       0x140406280: LoadSoundDataScd
   Common::Component::BGCollision::LinkList<Client::Sound::ISoundData,Client::Sound::ISoundData>:
@@ -9721,9 +9724,9 @@ classes:
       0x1407DE020: SetOwnPlayerNameSetting
       0x1407DE040: SetOthersPlayerNameSetting
       0x1407DE060: ToggleCharacterVoices
-      0x1407DE080: SetUnk54
+      0x1407DE080: SetEmjVoiceNpc
       0x1407DE0A0: IsVoiceUnlocked
-      0x1407DE0C0: SetUnk55
+      0x1407DE0C0: SetEmjCostumeId
       0x1407DE0E0: IsConstumeUnlocked
       0x1407DE120: ToggleVoiceSeen
       0x1407DE180: IsVoiceSeen
@@ -9976,6 +9979,14 @@ classes:
       0x1407F14D0: AddSeenSupportJob
       0x1407F1660: IsSupportJobSeen
       0x1407F1690: RemoveSeenSupportJob
+  Client::UI::Misc::GlassesModule:
+    vtbls:
+      - ea: 0x1420BF4E0
+        base: Client::UI::Misc::UserFileManager::UserFileEvent
+    funcs:
+      0x1407F2A50: ctor
+      0x1407F2C40: AddUnseenGlassesStyle
+      0x1407F2D40: RemoveUnseenGlassesStyle
   Client::UI::Misc::QuickPanelModule:
     vtbls:
       - ea: 0x1420BF468
@@ -12534,7 +12545,7 @@ classes:
       - ea: 0x1420FD268
         base: Client::UI::Agent::AgentInterface
     funcs:
-      0x1409C5D20: ctor
+      0x1420FD268: ctor
   Client::UI::Agent::AgentVoteKick:
     vtbls:
       - ea: 0x1420D83F0
@@ -13589,12 +13600,14 @@ classes:
     vtbls:
       - ea: 0x1420CB7F0
         base: Client::UI::Misc::CharaView
+    funcs:
+      0x1409A2880: ctor
   Client::UI::Agent::AgentEmj:
     vtbls:
       - ea: 0x142103A58
         base: Client::UI::Agent::AgentInterface
     funcs:
-      0x140ED1C00: ctor
+      0x1410546C0: ctor
   Client::UI::Agent::AgentAozContentBriefing:
     vtbls:
       - ea: 0x1420E4AC0
@@ -14751,6 +14764,12 @@ classes:
     funcs:
       0x140A223E0: ctor
       0x140A22410: Finalizer
+  Client::UI::Agent::AgentVVDVoteRoute:
+    vtbls:
+      - ea: 0x1420CC050
+        base: Client::UI::Agent::AgentInterface
+    funcs:
+      0x1409B4D60: ctor
   Client::UI::Agent::AgentTofuList:
     vtbls:
       - ea: 0x1420CD2A8
@@ -16165,6 +16184,8 @@ classes:
       0x140C8BB70: GetQuestBattleDirector
       0x140C8BBC0: GetGoldSaucerDirector
       0x140C8E7C0: CheckInteractRange
+      0x140C8E9D0: IsFestivalActive
+      0x140C8EA30: IsFestivalPhaseActive
       0x140C8F460: InteractWithHandlerFromSelector
       0x140C8FE90: AddDailyHandler
       0x140C8FEB0: RemoveDailyHandler
@@ -17334,30 +17355,48 @@ classes:
     vtbls:
       - ea: 0x1422EBB80
         base: Client::Game::InstanceContent::InstanceContentDirector
+  Client::Game::InstanceContent::InstanceContentVariantDungeon:
+    vtbls:
+      - ea: 0x142321B20
+        base: Client::Game::InstanceContent::InstanceContentDirector
+    funcs:
+      0x1419A9740: ctor
   Client::Game::InstanceContent::InstanceContentVariantDungeon1: # The Sil'dihn Subterrane
     vtbls:
       - ea: 0x14230F110
-        base: Client::Game::InstanceContent::InstanceContentDirector
+        base: Client::Game::InstanceContent::InstanceContentVariantDungeon
     funcs:
       0x14197EA60: ctor
   Client::Game::InstanceContent::InstanceContentVariantDungeon2: # Mount Rokkon
     vtbls:
       - ea: 0x14230E450
-        base: Client::Game::InstanceContent::InstanceContentVariantDungeon1
+        base: Client::Game::InstanceContent::InstanceContentVariantDungeon
     funcs:
       0x14197E6B0: ctor
   Client::Game::InstanceContent::InstanceContentVariantDungeon3: # Aloalo Island
     vtbls:
       - ea: 0x14230FDE0
-        base: Client::Game::InstanceContent::InstanceContentVariantDungeon1
+        base: Client::Game::InstanceContent::InstanceContentVariantDungeon
     funcs:
       0x14197EBB0: ctor
+  Client::Game::InstanceContent::InstanceContentVariantDungeon4: # The Merchant's Tale
+    vtbls:
+      - ea: 0x1423227E0
+        base: Client::Game::InstanceContent::InstanceContentVariantDungeon2
+    funcs:
+      0x1419A9AB0: ctor
   Client::Game::InstanceContent::InstanceContentCriterionDungeon:
     vtbls:
       - ea: 0x142310AA0
         base: Client::Game::InstanceContent::InstanceContentDirector
     funcs:
       0x14197EE70: ctor
+  Client::Game::InstanceContent::InstanceContentAozStage: # Masked Carnivale
+    vtbls:
+      - ea: 0x1422DB6A0
+        base: Client::Game::InstanceContent::InstanceContentDirector
+    funcs:
+      0x14195D450: ctor
   Client::Game::InstanceContent::PublicContentDirector:
     vtbls:
       - ea: 0x1421D0768
