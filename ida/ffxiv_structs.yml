@@ -6717,10 +6717,10 @@ enums:
   namespace: Client.UI.Agent
   flags: True
   values:
-    "None": 0
-    "DutyCompletion": 1
-    "Practice": 2
-    "Loot": 4
+    "None": 1
+    "DutyCompletion": 2
+    "Practice": 4
+    "Loot": 8
 - type: Client::UI::Agent::AgentLookingForGroup::CompletionStatus
   name: CompletionStatus
   underlying: byte
@@ -6860,6 +6860,14 @@ enums:
     "WaitUntilDeviceReady": 5
     "Resize": 6
     "MakeFullscreen": 7
+- type: Client::Graphics::Scene::CharacterBase::StagingAreaFlags
+  name: StagingAreaFlags
+  underlying: unsigned int
+  namespace: Client.Graphics.Scene
+  flags: True
+  values:
+    "HasModel": 2
+    "HasMaterials": 8
 - type: Client::Game::BGMSystem::PlayState
   name: PlayState
   underlying: unsigned int
@@ -10540,59 +10548,59 @@ structs:
   name: OccultCrescentState
   namespace: Client.Game.InstanceContent
   union: False
-  size: 105
+  size: 156
   fields:
   - type: unsigned int
     name: SupportJobExperience
     offset: 0
-    size: 16
+    size: 24
     is_string: False
   - type: unsigned int
     name: CurrentKnowledge
-    offset: 64
+    offset: 96
   - type: unsigned int
     name: NeededKnowledge
-    offset: 68
+    offset: 100
   - type: unsigned int
     name: NeededJobExperience
-    offset: 72
+    offset: 104
   - type: unsigned __int16
     name: Silver
-    offset: 76
+    offset: 108
   - type: unsigned __int16
     name: Gold
-    offset: 78
+    offset: 110
   - type: byte
     name: SupportJobLevels
-    offset: 80
-    size: 16
+    offset: 118
+    size: 24
     is_string: False
   - type: byte
     name: UnlockedTeleportBitmask
-    offset: 96
-    size: 2
+    offset: 142
+    size: 3
     is_string: False
   - type: byte
     name: CurrentSupportJob
-    offset: 98
+    offset: 145
   - type: byte
     name: KnowledgeLevelSync
-    offset: 99
+    offset: 146
   - type: byte
-    name: Unk64
-    offset: 100
+    name: Unk93
+    offset: 147
   - type: byte
-    name: Unk65
-    offset: 101
+    name: Unk94
+    offset: 148
   - type: byte
-    name: Unk66
-    offset: 102
+    name: Unk95
+    offset: 149
   - type: byte
-    name: Unk67
-    offset: 103
+    name: Unk96
+    offset: 150
   - type: byte
-    name: Unk68
-    offset: 104
+    name: Unk97
+    offset: 151
   member_functions: []
 - type: Client::Game::InventoryContainer
   name: InventoryContainer
@@ -14748,15 +14756,31 @@ structs:
   name: OnRenderMaterialParams
   namespace: Client.Graphics.Render
   union: False
-  size: 24
+  size: 56
   fields:
   - type: Client::Graphics::Render::Model*
     name: Model
     offset: 0
+  - type: unsigned int*
+    name: OutFlags
+    offset: 40
   - type: unsigned int
     name: MaterialIndex
+    offset: 48
+  member_functions: []
+- type: Client::Graphics::Render::ModelRenderer::OnRenderMaterialParams2
+  name: OnRenderMaterialParams2
+  namespace: Client.Graphics.Render
+  union: False
+  size: 72
+  fields:
+  - type: Client::Graphics::Render::ModelRenderer::OnRenderModelParams*
+    name: Inner
+    offset: 0
+  - type: Client::System::Resource::Handle::ModelResourceHandle*
+    name: _unk8
     offset: 8
-  - type: unsigned __int16*
+  - type: unsigned int
     name: OutFlags
     offset: 16
   member_functions: []
@@ -14769,6 +14793,9 @@ structs:
   - type: Client::Graphics::Render::Model*
     name: Model
     offset: 0
+  - type: Client::Graphics::Kernel::ConstantBuffer*
+    name: _unk10
+    offset: 16
   member_functions: []
 - type: Client::Graphics::Render::OffscreenRenderingManager
   name: OffscreenRenderingManager
@@ -14910,8 +14937,16 @@ structs:
     name: ModelResourceHandle
     offset: 8
   - type: Client::System::Resource::Handle::MaterialResourceHandle*
+    name: MaterialResourceHandles
+    offset: 24
+    size: 10
+    is_string: False
+  - type: Client::System::Resource::Handle::MaterialResourceHandle*
     name: SkinMaterialResourceHandle
     offset: 104
+  - type: Client::Graphics::Scene::CharacterBase::StagingAreaFlags
+    name: Flags
+    offset: 208
   member_functions: []
 - type: Client::Graphics::Scene::CharacterUtility
   name: CharacterUtility
@@ -16056,7 +16091,6 @@ structs:
   - type: wchar_t*
     name: LongStringPtr
     offset: 520
-  virtual_functions: []
   member_functions: []
 - type: Client::System::File::FileHandle
   name: FileHandle
@@ -25231,6 +25265,14 @@ structs:
       name: uintParam
     - type: __int64
       name: packet
+  - name: IsUIReady
+    offset: 1040
+    return_type: char
+    parameters:
+    - type: Client::UI::UIModuleInterface*
+      name: this
+    - type: char
+      name: ignoreHudInitialized
   - name: ChangeUIMode
     offset: 1048
     return_type: void
@@ -27925,6 +27967,19 @@ structs:
     parameters:
     - type: unsigned int
       name: classJobId
+- type: Component::GUI::AddonCollision
+  name: AddonCollision
+  namespace: Component.GUI
+  union: False
+  size: 16
+  fields:
+  - type: Component::GUI::AtkUnitBase*
+    name: UnitBase
+    offset: 0
+  - type: Component::GUI::AtkCollisionNode*
+    name: CollisionNode
+    offset: 8
+  member_functions: []
 - type: Component::GUI::AtkAddonControl::ChildAddonInfo
   name: ChildAddonInfo
   namespace: Component.GUI
@@ -29146,6 +29201,14 @@ structs:
       name: this
     - type: byte
       name: freeFlags
+  - name: IsUIReady
+    offset: 32
+    return_type: char
+    parameters:
+    - type: Component::GUI::AtkModuleInterface*
+      name: this
+    - type: char
+      name: ignoreHudInitialized
   - name: GetNumberArrayData
     offset: 72
     return_type: Component::GUI::NumberArrayData*
@@ -29292,8 +29355,6 @@ structs:
       name: this
     - type: Component::GUI::AtkCursor::CursorType
       name: cursorType
-  - name: IsUIReady
-    offset: 32
   - name: EnsureNumberArray
     offset: 48
   - name: EnsureStringArray
@@ -45310,12 +45371,12 @@ structs:
     name: AtkEventInterface
     offset: 0
     base: true
-  - type: char
-    name: Unk8
-    offset: 8
   - type: Client::UI::UIModuleInterface*
     name: UIModuleInterface
     offset: 16
+  - type: Component::GUI::AtkModuleInterface::AtkEventInterface*
+    name: OpenerEventInterface
+    offset: 24
   - type: unsigned int
     name: AddonId
     offset: 32
@@ -88217,8 +88278,8 @@ structs:
   - type: char
     name: IsRequestUnfulfilled
     offset: 168
-  - type: char
-    name: IsCabinetCached
+  - type: byte
+    name: CabinetState
     offset: 169
   - type: char
     name: IsRetainerManagerReady
@@ -92113,6 +92174,7 @@ structs:
   - type: Client::System::String::Utf8String
     name: UnkString0
     offset: 200
+  vtable_size: 2200
   virtual_functions:
   - name: ProcessYield
     offset: 320
@@ -93927,9 +93989,7 @@ structs:
     parameters:
     - type: Client::Graphics::Render::ModelRenderer*
       name: this
-    - type: unsigned __int16*
-      name: outFlags
-    - type: Client::Graphics::Render::ModelRenderer::OnRenderModelParams*
+    - type: Client::Graphics::Render::ModelRenderer::OnRenderMaterialParams2*
       name: param
     - type: Client::Graphics::Render::Material*
       name: material
@@ -100562,6 +100622,7 @@ structs:
     offset: 1070
     size: 2
     is_string: False
+  vtable_size: 2208
   virtual_functions:
   - name: ProcessYield
     offset: 320
@@ -105822,6 +105883,7 @@ structs:
   - type: Common::Component::Excel::LinkList<Component::Excel::RingBufferExcelPageRowResolver::RowWrapperList>
     name: LinkedList
     offset: 0
+    base: true
   - type: Component::Excel::ExcelRowDescriptor
     name: RowDescriptor
     offset: 24
@@ -121795,6 +121857,7 @@ structs:
   - type: Common::Component::Excel::ExcelSheet*
     name: CurrentSheet
     offset: 12944
+  vtable_size: 2200
   virtual_functions:
   - name: ProcessYield
     offset: 320
@@ -125454,6 +125517,18 @@ structs:
     offset: 40089
   vtable_size: 344
   virtual_functions:
+  - name: GetAddonCollision
+    offset: 56
+    return_type: void
+    parameters:
+    - type: Component::GUI::AtkUnitManager*
+      name: this
+    - type: Component::GUI::AddonCollision*
+      name: collisionInfo
+    - type: __int16
+      name: x
+    - type: __int16
+      name: y
   - name: SetAddonVisibility
     offset: 64
     return_type: char
@@ -125698,6 +125773,7 @@ structs:
   - type: unsigned int
     name: LuaScriptVersion
     offset: 720
+  vtable_size: 2224
   virtual_functions:
   - name: ProcessYield
     offset: 320
@@ -125927,7 +126003,7 @@ structs:
   - type: Client::Graphics::Scene::CharacterBase::SlotStagingArea*
     name: PerSlotStagingArea
     offset: 776
-  - type: Client::Graphics::Render::Material**
+  - type: Client::System::Resource::Handle::MaterialResourceHandle**
     name: Materials
     offset: 848
   - type: __int64
@@ -126217,6 +126293,36 @@ structs:
       name: pathBuffer
     - type: unsigned __int64
       name: pathBufferSize
+  - name: GetDyeForSlot
+    offset: 760
+    return_type: byte
+    parameters:
+    - type: Client::Graphics::Scene::CharacterBase*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+    - type: unsigned int
+      name: dyeIndex
+  - name: CreateDeformer
+    offset: 808
+    return_type: __int64
+    parameters:
+    - type: Client::Graphics::Scene::CharacterBase*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+  - name: CreateRenderModel
+    offset: 816
+    return_type: Client::Graphics::Render::Model*
+    parameters:
+    - type: Client::Graphics::Scene::CharacterBase*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+    - type: Client::System::Resource::Handle::ModelResourceHandle*
+      name: modelResourceHandle
+    - type: __int64
+      name: deformer
   - name: IsFreeCompanyCrestVisibleOnSlot
     offset: 864
     return_type: char
@@ -126389,14 +126495,8 @@ structs:
     offset: 464
   - name: GetRaceSexId
     offset: 704
-  - name: GetDyeFlorSlot
-    offset: 760
   - name: GetSkeletonCount
     offset: 768
-  - name: CreateDeformer
-    offset: 808
-  - name: CreateRenderModelForMDL
-    offset: 816
   member_functions:
   - signature: E8 ?? ?? ?? ?? 40 F6 C7 01 74 3A 40 F6 C7 04 75 27 48 85 DB 74 2F 48 8B 05 ?? ?? ?? ?? 48 8B D3 48 8B 48 30
     return_type: void
@@ -126404,6 +126504,14 @@ structs:
     parameters:
     - type: Client::Graphics::Scene::CharacterBase*
       name: this
+  - signature: 89 54 24 ?? 55 56 41 56 48 81 EC
+    return_type: __int64
+    name: SetupSlotModel
+    parameters:
+    - type: Client::Graphics::Scene::CharacterBase*
+      name: this
+    - type: unsigned int
+      name: slot
   static_member_functions:
   - signature: E8 ?? ?? ?? ?? 48 8B 4F 08 48 8B D0 4C 8B 01
     return_type: Client::Graphics::Scene::CharacterBase*
@@ -159014,6 +159122,7 @@ structs:
     name: LuaEventHandler
     offset: 0
     base: true
+  vtable_size: 2272
   virtual_functions:
   - name: ProcessYield
     offset: 320
@@ -159996,6 +160105,36 @@ structs:
       name: pathBuffer
     - type: unsigned __int64
       name: pathBufferSize
+  - name: GetDyeForSlot
+    offset: 760
+    return_type: byte
+    parameters:
+    - type: Client::Graphics::Scene::Demihuman*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+    - type: unsigned int
+      name: dyeIndex
+  - name: CreateDeformer
+    offset: 808
+    return_type: __int64
+    parameters:
+    - type: Client::Graphics::Scene::Demihuman*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+  - name: CreateRenderModel
+    offset: 816
+    return_type: Client::Graphics::Render::Model*
+    parameters:
+    - type: Client::Graphics::Scene::Demihuman*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+    - type: Client::System::Resource::Handle::ModelResourceHandle*
+      name: modelResourceHandle
+    - type: __int64
+      name: deformer
   - name: IsFreeCompanyCrestVisibleOnSlot
     offset: 864
     return_type: char
@@ -160458,6 +160597,36 @@ structs:
       name: pathBuffer
     - type: unsigned __int64
       name: pathBufferSize
+  - name: GetDyeForSlot
+    offset: 760
+    return_type: byte
+    parameters:
+    - type: Client::Graphics::Scene::Monster*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+    - type: unsigned int
+      name: dyeIndex
+  - name: CreateDeformer
+    offset: 808
+    return_type: __int64
+    parameters:
+    - type: Client::Graphics::Scene::Monster*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+  - name: CreateRenderModel
+    offset: 816
+    return_type: Client::Graphics::Render::Model*
+    parameters:
+    - type: Client::Graphics::Scene::Monster*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+    - type: Client::System::Resource::Handle::ModelResourceHandle*
+      name: modelResourceHandle
+    - type: __int64
+      name: deformer
   - name: IsFreeCompanyCrestVisibleOnSlot
     offset: 864
     return_type: char
@@ -160944,6 +161113,36 @@ structs:
       name: pathBuffer
     - type: unsigned __int64
       name: pathBufferSize
+  - name: GetDyeForSlot
+    offset: 760
+    return_type: byte
+    parameters:
+    - type: Client::Graphics::Scene::Weapon*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+    - type: unsigned int
+      name: dyeIndex
+  - name: CreateDeformer
+    offset: 808
+    return_type: __int64
+    parameters:
+    - type: Client::Graphics::Scene::Weapon*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+  - name: CreateRenderModel
+    offset: 816
+    return_type: Client::Graphics::Render::Model*
+    parameters:
+    - type: Client::Graphics::Scene::Weapon*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+    - type: Client::System::Resource::Handle::ModelResourceHandle*
+      name: modelResourceHandle
+    - type: __int64
+      name: deformer
   - name: IsFreeCompanyCrestVisibleOnSlot
     offset: 864
     return_type: char
@@ -175251,6 +175450,18 @@ structs:
       name: atkEvent
     - type: Component::GUI::AtkEventData*
       name: atkEventData
+  - name: GetAddonCollision
+    offset: 56
+    return_type: void
+    parameters:
+    - type: Client::UI::RaptureAtkUnitManager*
+      name: this
+    - type: Component::GUI::AddonCollision*
+      name: collisionInfo
+    - type: __int16
+      name: x
+    - type: __int16
+      name: y
   - name: SetAddonVisibility
     offset: 64
     return_type: char
@@ -175981,6 +176192,7 @@ structs:
   - type: unsigned int
     name: EventItemId
     offset: 1112
+  vtable_size: 2400
   virtual_functions:
   - name: PopulateMapMarkers
     offset: 2224
@@ -185229,8 +185441,11 @@ structs:
     name: TargetSystem
     offset: 400
   - type: char
+    name: IsWalkingDuringAutorun
+    offset: 29976
+  - type: char
     name: IsWalking
-    offset: 30259
+    offset: 30263
   - type: unsigned int
     name: LocalPlayerEntityId
     offset: 30360
@@ -185540,6 +185755,7 @@ structs:
   - type: unsigned __int16
     name: FateId
     offset: 1140
+  vtable_size: 2408
   virtual_functions:
   - name: ProcessYield
     offset: 320
@@ -186269,6 +186485,36 @@ structs:
       name: pathBuffer
     - type: unsigned __int64
       name: pathBufferSize
+  - name: GetDyeForSlot
+    offset: 760
+    return_type: byte
+    parameters:
+    - type: Client::Graphics::Scene::Human*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+    - type: unsigned int
+      name: dyeIndex
+  - name: CreateDeformer
+    offset: 808
+    return_type: __int64
+    parameters:
+    - type: Client::Graphics::Scene::Human*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+  - name: CreateRenderModel
+    offset: 816
+    return_type: Client::Graphics::Render::Model*
+    parameters:
+    - type: Client::Graphics::Scene::Human*
+      name: this
+    - type: unsigned int
+      name: slotIndex
+    - type: Client::System::Resource::Handle::ModelResourceHandle*
+      name: modelResourceHandle
+    - type: __int64
+      name: deformer
   - name: IsFreeCompanyCrestVisibleOnSlot
     offset: 864
     return_type: char
@@ -198773,6 +199019,7 @@ structs:
   - type: float
     name: ContentTimeLeft
     offset: 3312
+  vtable_size: 2984
   virtual_functions:
   - name: GetCurrentLevel
     offset: 2424
@@ -202429,6 +202676,12 @@ structs:
       name: this
     - type: int
       name: exitCode
+  - signature: E8 ?? ?? ?? ?? 33 C0 E9 ?? ?? ?? ?? 48 8B 05
+    return_type: void
+    name: ExitFromWindow
+    parameters:
+    - type: Client::System::Framework::Framework*
+      name: this
   - signature: E8 ?? ?? ?? ?? 80 7B 1D 01
     return_type: Client::UI::UIModule*
     name: GetUIModule
@@ -215410,6 +215663,7 @@ structs:
   - type: Client::Game::InstanceContent::ContentDirector::MapEffectList
     name: ManagedSharedGroups
     offset: 3552
+  vtable_size: 3248
   virtual_functions:
   - name: ProcessYield
     offset: 320
@@ -215556,6 +215810,7 @@ structs:
   - type: Client::Game::InstanceContent::ContentDirector::MapEffectList
     name: ManagedSharedGroups
     offset: 3428
+  vtable_size: 3112
   virtual_functions:
   - name: ProcessYield
     offset: 320
@@ -221089,6 +221344,14 @@ structs:
       name: this
     - type: byte
       name: freeFlags
+  - name: IsUIReady
+    offset: 32
+    return_type: char
+    parameters:
+    - type: Component::GUI::AtkModule*
+      name: this
+    - type: char
+      name: ignoreHudInitialized
   - name: GetNumberArrayData
     offset: 72
     return_type: Component::GUI::NumberArrayData*
@@ -222995,6 +223258,14 @@ structs:
       name: this
     - type: byte
       name: freeFlags
+  - name: IsUIReady
+    offset: 32
+    return_type: char
+    parameters:
+    - type: Client::UI::RaptureAtkModule*
+      name: this
+    - type: char
+      name: ignoreHudInitialized
   - name: GetNumberArrayData
     offset: 72
     return_type: Component::GUI::NumberArrayData*
@@ -224626,6 +224897,14 @@ structs:
       name: uintParam
     - type: __int64
       name: packet
+  - name: IsUIReady
+    offset: 1040
+    return_type: char
+    parameters:
+    - type: Client::UI::UIModule*
+      name: this
+    - type: char
+      name: ignoreHudInitialized
   - name: ChangeUIMode
     offset: 1048
     return_type: void
