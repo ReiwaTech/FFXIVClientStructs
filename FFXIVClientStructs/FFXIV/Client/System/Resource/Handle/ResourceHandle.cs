@@ -29,7 +29,7 @@ public unsafe partial struct ResourceHandle {
     [FieldOffset(0x48)] public StdString FileName; // std::string
     [FieldOffset(0x68)] public byte LastIOResult;
     [FieldOffset(0x98)] public Spinlock Lock;
-    [CExporterTypeForce("LPCRITICAL_SECTION*", true)]
+    [CExporterTypeForce("LPCRITICAL_SECTION", true)]
     [FieldOffset(0xA0)] public void* LoadStateCriticalSection;
     [FieldOffset(0xA8)] public byte ReadState;
     [FieldOffset(0xA9)] public byte LoadState; // Access is (sometimes?) protected with the LoadStateCriticalSection
@@ -112,7 +112,7 @@ public struct ResourceHandleType {
     [FieldOffset(0x0), CExporterIgnore] public uint Value;
     [FieldOffset(0x0)] public HandleCategory Category;
     [FieldOffset(0x2)] private byte Unknown0A;
-    [FieldOffset(0x3)] public byte Expansion;
+    [FieldOffset(0x3)] public byte Expansion; // Should be CategoryMapIndex
 
     public static explicit operator ResourceHandleType(ResourceCategory value) {
         return new() {
