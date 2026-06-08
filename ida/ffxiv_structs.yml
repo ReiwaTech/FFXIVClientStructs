@@ -1524,7 +1524,7 @@ enums:
     "Float": 7
     "String": 8
     "WideString": 9
-    "String8": 10
+    "ConstString": 10
     "Vector": 11
     "Pointer": 12
     "AtkValues": 13
@@ -6564,7 +6564,7 @@ enums:
   values:
     "MainHand": 0
     "OffHand": 1
-    "Unk": 2
+    "System": 2
 - type: Client::Game::Character::EffectContainer::StatusEffect
   name: StatusEffect
   underlying: byte
@@ -7076,7 +7076,7 @@ enums:
     "Valid": 1
     "InvalidVersion": 2
     "InvalidCustomizeData": 3
-- type: Client::Game::WKS::WKSManager::MissionRank
+- type: Client::Game::WKS::WKSMissionModule::MissionRank
   name: MissionRank
   underlying: int
   namespace: Client.Game.WKS
@@ -8565,6 +8565,34 @@ structs:
     return_type: char
     name: IsAutoRunning
     parameters: []
+- type: Client::Game::Control::MoveControl::MoveController
+  name: MoveController
+  namespace: Client.Game.Control.MoveControl
+  union: False
+  size: 1088
+  fields:
+  - type: Client::Game::Character::BattleChara*
+    name: OwnerObject
+    offset: 992
+  - type: Client::Game::Character::MovementStateOptions
+    name: MovementState
+    offset: 1040
+  - type: byte
+    name: Flags438
+    offset: 1080
+    bits:
+    - type: byte
+      offset: 0
+      size: 5
+      name: UnkBits0
+    - type: byte
+      offset: 5
+      size: 1
+      name: IsSwimming
+  virtual_functions:
+  - name: Dtor
+    offset: 0
+  member_functions: []
 - type: Client::Game::Control::TargetSystem::OutlineInfo
   name: OutlineInfo
   namespace: Client.Game.Control
@@ -14213,9 +14241,12 @@ structs:
   - type: unsigned int
     name: MissionFlag
     offset: 4
-  - type: unsigned __int16
+  - type: byte
     name: Unk8
     offset: 8
+  - type: byte
+    name: Unk9
+    offset: 9
   - type: byte
     name: Condition
     offset: 10
@@ -14238,6 +14269,31 @@ structs:
       name: this
   - name: SetOwnerEvent
     offset: 0
+  member_functions: []
+- type: Client::Game::WKS::WKSMissionModule::MissionState
+  name: MissionState
+  namespace: Client.Game.WKS
+  union: False
+  size: 64
+  fields:
+  - type: unsigned __int16
+    name: MissionUnitRowId
+    offset: 0
+  - type: unsigned __int16
+    name: Score
+    offset: 12
+  - type: Client::Game::WKS::WKSMissionModule::MissionRank
+    name: Rank
+    offset: 16
+  - type: byte
+    name: Unk14
+    offset: 20
+  - type: unsigned __int16
+    name: CollectedTotal
+    offset: 22
+  - type: byte
+    name: CollectedIndividual
+    offset: 24
   member_functions: []
 - type: Client::Game::WKS::WKSModuleBase
   name: WKSModuleBase
@@ -22329,8 +22385,8 @@ structs:
   - type: char
     name: ActiveInList
     offset: 16
-  - type: int
-    name: Unk5
+  - type: char
+    name: LockedInList
     offset: 20
   member_functions: []
 - type: Client::UI::Arrays::EnemyListStringArray::EnemyListEnemyStringArray
@@ -40038,6 +40094,38 @@ structs:
       name: this
     - type: char
       name: newState
+- type: Client::Game::WKS::WKSManager::WKSMasterMissionState
+  name: WKSMasterMissionState
+  namespace: Client.Game.WKS
+  union: False
+  size: 16
+  fields:
+  - type: Client::Game::WKS::WKSManager::WKSMissionState
+    name: WKSMissionState
+    offset: 0
+    base: true
+  - type: unsigned int
+    name: UnkC
+    offset: 12
+  member_functions: []
+- type: Client::Game::WKS::WKSManager::WKSMissionClassState
+  name: WKSMissionClassState
+  namespace: Client.Game.WKS
+  union: False
+  size: 44
+  fields:
+  - type: Client::Game::WKS::WKSManager::WKSMissionState
+    name: Missions
+    offset: 0
+    size: 3
+    is_string: False
+  - type: byte
+    name: Unk24
+    offset: 36
+  - type: unsigned int
+    name: Unk26
+    offset: 38
+  member_functions: []
 - type: Client::Game::WKS::WKSMissionModule
   name: WKSMissionModule
   namespace: Client.Game.WKS
@@ -58472,7 +58560,7 @@ structs:
     name: ObjectId
     offset: 16
   - type: byte
-    name: Unk18
+    name: CurrentEvent
     offset: 24
   - type: int
     name: Unk1C
@@ -61328,28 +61416,6 @@ structs:
   - type: char
     name: IsFreeAetheryte
     offset: 28
-  member_functions: []
-- type: Client::Game::WKS::WKSManager::WKSJobState
-  name: WKSJobState
-  namespace: Client.Game.WKS
-  union: False
-  size: 328
-  fields:
-  - type: Client::Game::WKS::WKSManager::WKSMissionState
-    name: ExtraBasicMission
-    offset: 176
-  - type: StdVector<Client::Game::WKS::WKSManager::WKSMissionState>
-    name: SequentialMissions
-    offset: 192
-  - type: StdVector<Client::Game::WKS::WKSManager::WKSMissionState>
-    name: ProvisionalMissions
-    offset: 216
-  - type: StdVector<Client::Game::WKS::WKSManager::WKSMissionState>
-    name: CriticalMissions
-    offset: 240
-  - type: unsigned int
-    name: CriticalMissionData
-    offset: 264
   member_functions: []
 - type: Client::Graphics::Kernel::PVShader
   name: PVShader
@@ -79207,7 +79273,7 @@ structs:
     parameters:
     - type: Common::Component::Excel::ExcelSheet*
       name: this
-  - signature: E8 ?? ?? ?? ?? 48 8B 4F ?? 49 89 44 0E
+  - signature: 48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 83 EC ?? 48 8B F9 48 8D 74 24
     return_type: Component::Excel::IExcelRowWrapper*
     name: GetRowByDescriptor
     parameters:
@@ -79217,6 +79283,26 @@ structs:
       name: descriptor
     - type: unsigned int*
       name: outErrorCode
+  - signature: E8 ?? ?? ?? ?? 48 8B 4F ?? 49 89 44 0E
+    return_type: Component::Excel::IExcelRowWrapper*
+    name: GetSubRowByDescriptor
+    parameters:
+    - type: Common::Component::Excel::ExcelSheet*
+      name: this
+    - type: Component::Excel::ExcelRowDescriptor*
+      name: descriptor
+    - type: unsigned int*
+      name: outErrorCode
+  - signature: E8 ?? ?? ?? ?? 48 85 C0 74 ?? B0 ?? EB
+    return_type: Component::Excel::IExcelRowWrapper*
+    name: GetRowByIndex
+    parameters:
+    - type: Common::Component::Excel::ExcelSheet*
+      name: this
+    - type: unsigned int
+      name: rowIndex
+    - type: Component::Excel::ExcelRowDescriptor*
+      name: descriptor
   - signature: E8 ?? ?? ?? ?? 8B D3 48 8B F8
     return_type: Component::Excel::IExcelRowWrapper*
     name: GetRowById
@@ -82656,84 +82742,6 @@ structs:
     parameters:
     - type: Client::Game::WKS::WKSContentInventoryContainer*
       name: this
-  member_functions: []
-- type: Client::Game::WKS::WKSManager::WKSState
-  name: WKSState
-  namespace: Client.Game.WKS
-  union: False
-  size: 4232
-  fields:
-  - type: byte
-    name: Unk00
-    offset: 0
-  - type: byte
-    name: Unk01
-    offset: 1
-  - type: int
-    name: ProjectState
-    offset: 4
-  - type: unsigned __int16
-    name: Unk08
-    offset: 8
-  - type: unsigned __int16
-    name: DevGrade
-    offset: 10
-  - type: int
-    name: ProjectTimestamp
-    offset: 12
-  - type: unsigned __int16
-    name: CurrentFateControlRowId
-    offset: 16
-  - type: unsigned __int16
-    name: CurrentFateId
-    offset: 18
-  - type: byte
-    name: Unk14
-    offset: 20
-  - type: byte
-    name: CurrentPlanetIndex
-    offset: 21
-  - type: byte
-    name: LatestPlanetIndex
-    offset: 22
-  - type: Client::Game::WKS::WKSManager::WKSJobState
-    name: JobStates
-    offset: 24
-    size: 11
-    is_string: False
-  - type: unsigned __int16
-    name: CurrentMissionUnitRowId
-    offset: 3632
-  - type: unsigned int
-    name: CurrentScore
-    offset: 3644
-  - type: Client::Game::WKS::WKSManager::MissionRank
-    name: CurrentRank
-    offset: 3648
-  - type: unsigned __int16
-    name: CollectedTotal
-    offset: 3654
-  - type: byte
-    name: CollectedIndividual
-    offset: 3656
-  - type: unsigned int
-    name: FishingBait
-    offset: 3700
-  - type: byte
-    name: MissionCompletionFlags
-    offset: 3713
-    size: 213
-    is_string: False
-  - type: byte
-    name: MissionGoldFlags
-    offset: 3926
-    size: 213
-    is_string: False
-  - type: int
-    name: Scores
-    offset: 4140
-    size: 11
-    is_string: False
   member_functions: []
 - type: Client::Game::WKS::WKSMechaEventMapMarker
   name: WKSMechaEventMapMarker
@@ -95783,7 +95791,7 @@ structs:
   - type: byte
     name: CaughtFish
     offset: 1055
-    size: 189
+    size: 190
     is_string: False
   - type: unsigned int
     name: NumFishCaught
@@ -96367,6 +96375,38 @@ structs:
     - 3
     is_pointer: False
     return_type: Client::Game::UI::PlayerState
+- type: Client::Game::WKS::WKSManager::WKSJobState
+  name: WKSJobState
+  namespace: Client.Game.WKS
+  union: False
+  size: 328
+  fields:
+  - type: Client::Game::WKS::WKSManager::WKSMissionClassState
+    name: MissionClasses
+    offset: 0
+    size: 4
+    is_string: False
+  - type: Client::Game::WKS::WKSManager::WKSMissionState
+    name: ExtraBasicMission
+    offset: 176
+  - type: StdVector<Client::Game::WKS::WKSManager::WKSMissionState>
+    name: SequentialMissions
+    offset: 192
+  - type: StdVector<Client::Game::WKS::WKSManager::WKSMissionState>
+    name: ProvisionalMissions
+    offset: 216
+  - type: StdVector<Client::Game::WKS::WKSManager::WKSMissionState>
+    name: CriticalMissions
+    offset: 240
+  - type: int
+    name: CriticalMissionTimestamp
+    offset: 264
+  - type: Client::Game::WKS::WKSManager::WKSMasterMissionState
+    name: MasterMissions
+    offset: 272
+    size: 3
+    is_string: False
+  member_functions: []
 - type: Client::Graphics::Render::ModelRenderer
   name: ModelRenderer
   namespace: Client.Graphics.Render
@@ -113066,96 +113106,72 @@ structs:
     - type: Client::Game::InventoryType
       name: inventoryType
   member_functions: []
-- type: Client::Game::WKS::WKSManager
-  name: WKSManager
+- type: Client::Game::WKS::WKSManager::WKSState
+  name: WKSState
   namespace: Client.Game.WKS
   union: False
-  size: 4688
+  size: 4232
   fields:
-  - type: Client::Game::Character::CharacterManagerInterface
-    name: CharacterManagerInterface
+  - type: byte
+    name: Unk00
     offset: 0
-    base: true
+  - type: byte
+    name: Unk01
+    offset: 1
+  - type: int
+    name: ProjectState
+    offset: 4
   - type: unsigned __int16
-    name: TerritoryId
+    name: Unk08
+    offset: 8
+  - type: unsigned __int16
+    name: DevGrade
+    offset: 10
+  - type: int
+    name: ProjectTimestamp
+    offset: 12
+  - type: unsigned __int16
+    name: CurrentFateControlRowId
+    offset: 16
+  - type: unsigned __int16
+    name: CurrentFateId
+    offset: 18
+  - type: byte
+    name: Unk14
+    offset: 20
+  - type: byte
+    name: CurrentPlanetIndex
+    offset: 21
+  - type: byte
+    name: LatestPlanetIndex
+    offset: 22
+  - type: Client::Game::WKS::WKSManager::WKSJobState
+    name: JobStates
     offset: 24
-  - type: char
-    name: IsLoaded
-    offset: 26
-  - type: Client::Game::WKS::WKSManager::WKSState
-    name: State
-    offset: 80
-  - type: __int64
-    name: UnkStruct10F8
-    offset: 4344
-  - type: __int64
-    name: UnkStruct1100
-    offset: 4352
-  - type: Client::Game::WKS::WKSMechaEventModule*
-    name: MechaEventModule
-    offset: 4360
-  - type: __int64
-    name: UnkStruct1110
-    offset: 4368
-  - type: __int64
-    name: UnkStruct1118
-    offset: 4376
-  - type: __int64
-    name: EmergencyInfoModule
-    offset: 4384
-  - type: __int64
-    name: UnkStruct1128
-    offset: 4392
-  - type: __int64
-    name: UnkStruct1130
-    offset: 4400
-  - type: Client::Game::WKS::WKSMissionModule*
-    name: MissionModule
-    offset: 4408
-  - type: Client::Game::WKS::WKSResearchModule*
-    name: ResearchModule
-    offset: 4416
-  - type: __int64
-    name: UnkStruct1148
-    offset: 4424
-  - type: __int64
-    name: UnkStruct1150
-    offset: 4432
-  - type: StdVector<Client::Game::WKS::WKSModuleBase*>
-    name: Modules
-    offset: 4440
-  virtual_functions:
-  - name: Dtor
-    offset: 40
-    return_type: Client::Game::Character::CharacterManagerInterface*
-    parameters:
-    - type: Client::Game::WKS::WKSManager*
-      name: this
-    - type: byte
-      name: freeFlags
-  member_functions:
-  - signature: 48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 0F B7 DA 48 8B F9 E8 ?? ?? ?? ?? 8B CB
-    return_type: void
-    name: Load
-    parameters:
-    - type: Client::Game::WKS::WKSManager*
-      name: this
-    - type: unsigned __int16
-      name: territoryId
-  - signature: E8 ?? ?? ?? ?? 0F B6 F8 49 8B 4E
-    return_type: char
-    name: IsFunctionUnlocked
-    parameters:
-    - type: Client::Game::WKS::WKSManager*
-      name: this
-    - type: byte
-      name: functionRowId
-  static_members:
-  - signature: 48 89 05 ?? ?? ?? ?? 48 8B F8
-    relative_follow_offsets:
-    - 3
-    is_pointer: True
-    return_type: Client::Game::WKS::WKSManager
+    size: 11
+    is_string: False
+  - type: Client::Game::WKS::WKSMissionModule::MissionState
+    name: CurrentMission
+    offset: 3632
+  - type: unsigned int
+    name: FishingBait
+    offset: 3700
+  - type: byte
+    name: MissionCompletionFlags
+    offset: 3713
+    size: 213
+    is_string: False
+  - type: byte
+    name: MissionGoldFlags
+    offset: 3926
+    size: 213
+    is_string: False
+  - type: int
+    name: Scores
+    offset: 4140
+    size: 11
+    is_string: False
+  member_functions: []
 - type: Client::Game::WKS::WKSMechaEvent
   name: WKSMechaEvent
   namespace: Client.Game.WKS
@@ -116225,7 +116241,7 @@ structs:
       name: digits
     - type: char
       name: addZeroPadding
-  - signature: E8 ?? ?? ?? ?? 48 83 C4 28 5F 5D
+  - signature: 48 85 C9 0F 84 ?? ?? ?? ?? 55 48 83 EC ?? B2
     return_type: void
     name: ResizeNodeForCurrentText
     parameters:
@@ -119276,7 +119292,7 @@ structs:
       name: this
     - type: byte
       name: rowId
-  - signature: E8 ?? ?? ?? ?? 49 63 47 ?? 49 8D 4F
+  - signature: E8 ?? ?? ?? ?? 84 C0 75 ?? 48 8D 8B ?? ?? ?? ?? E8 ?? ?? ?? ?? 48 8B 03
     return_type: char
     name: LoadContentRoulette
     parameters:
@@ -124472,6 +124488,96 @@ structs:
     name: Type
     offset: 164
   member_functions: []
+- type: Client::Game::WKS::WKSManager
+  name: WKSManager
+  namespace: Client.Game.WKS
+  union: False
+  size: 4688
+  fields:
+  - type: Client::Game::Character::CharacterManagerInterface
+    name: CharacterManagerInterface
+    offset: 0
+    base: true
+  - type: unsigned __int16
+    name: TerritoryId
+    offset: 24
+  - type: char
+    name: IsLoaded
+    offset: 26
+  - type: Client::Game::WKS::WKSManager::WKSState
+    name: State
+    offset: 80
+  - type: __int64
+    name: LivelyActorGroupTable
+    offset: 4344
+  - type: __int64
+    name: SharedGroupModule
+    offset: 4352
+  - type: Client::Game::WKS::WKSMechaEventModule*
+    name: MechaEventModule
+    offset: 4360
+  - type: __int64
+    name: JobStateModule
+    offset: 4368
+  - type: __int64
+    name: AchievementModule
+    offset: 4376
+  - type: __int64
+    name: EmergencyModule
+    offset: 4384
+  - type: __int64
+    name: FortuneModule
+    offset: 4392
+  - type: __int64
+    name: PraiseHologramModule
+    offset: 4400
+  - type: Client::Game::WKS::WKSMissionModule*
+    name: MissionModule
+    offset: 4408
+  - type: Client::Game::WKS::WKSResearchModule*
+    name: ResearchModule
+    offset: 4416
+  - type: __int64
+    name: LogModule
+    offset: 4424
+  - type: __int64
+    name: TreasureModule
+    offset: 4432
+  - type: StdVector<Client::Game::WKS::WKSModuleBase*>
+    name: Modules
+    offset: 4440
+  virtual_functions:
+  - name: Dtor
+    offset: 40
+    return_type: Client::Game::Character::CharacterManagerInterface*
+    parameters:
+    - type: Client::Game::WKS::WKSManager*
+      name: this
+    - type: byte
+      name: freeFlags
+  member_functions:
+  - signature: 48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 0F B7 DA 48 8B F9 E8 ?? ?? ?? ?? 8B CB
+    return_type: void
+    name: Load
+    parameters:
+    - type: Client::Game::WKS::WKSManager*
+      name: this
+    - type: unsigned __int16
+      name: territoryId
+  - signature: E8 ?? ?? ?? ?? 0F B6 F8 49 8B 4E
+    return_type: char
+    name: IsFunctionUnlocked
+    parameters:
+    - type: Client::Game::WKS::WKSManager*
+      name: this
+    - type: byte
+      name: functionRowId
+  static_members:
+  - signature: 48 89 05 ?? ?? ?? ?? 48 8B F8
+    relative_follow_offsets:
+    - 3
+    is_pointer: True
+    return_type: Client::Game::WKS::WKSManager
 - type: Client::System::Resource::Handle::SkeletonResourceHandle
   name: SkeletonResourceHandle
   namespace: Client.System.Resource.Handle
@@ -229195,6 +229301,15 @@ structs:
   - type: Client::Game::Event::DailyQuestMap
     name: DailyQuests
     offset: 17880
+  - type: Client::System::String::Utf8String
+    name: DailySelectTitle
+    offset: 17896
+  - type: Client::System::String::Utf8String
+    name: DailySelectSubTitle
+    offset: 18000
+  - type: Client::System::String::Utf8String
+    name: DailySelectAllowance
+    offset: 18104
   - type: Client::Game::GameMain::Festival
     name: Festivals
     offset: 18282
@@ -230413,21 +230528,9 @@ structs:
     name: CharacterData
     offset: 416
     base: true
-  - type: Client::Game::Character::MovementStateOptions
-    name: MovementState
-    offset: 1536
-  - type: byte
-    name: Flags628
-    offset: 1576
-    bits:
-    - type: byte
-      offset: 0
-      size: 5
-      name: UnkBits0
-    - type: byte
-      offset: 5
-      size: 1
-      name: IsSwimming
+  - type: Client::Game::Control::MoveControl::MoveController
+    name: MoveController
+    offset: 496
   - type: Client::Game::Control::EmoteController
     name: EmoteController
     offset: 1584
@@ -232548,7 +232651,7 @@ structs:
   - type: byte
     name: SeenCutscenes
     offset: 106731
-    size: 179
+    size: 180
     is_string: False
   - type: byte
     name: UnlockedTripleTriadCards
