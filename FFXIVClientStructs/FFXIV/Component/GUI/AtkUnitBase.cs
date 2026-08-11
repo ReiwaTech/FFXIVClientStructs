@@ -57,12 +57,14 @@ public unsafe partial struct AtkUnitBase : ICreatable<AtkUnitBase> {
     [FieldOffset(0x1A4)] public byte Flags1A4;
     [BitField<bool>(nameof(EnableTextNodePopulation), 5)]
     [BitField<bool>(nameof(DisableShowOnOpen), 6)]
+    [BitField<bool>(nameof(EnableCollisionClipping), 7)]
     [FieldOffset(0x1A5)] public byte Flags1A5;
     // 2 bytes padding
     [FieldOffset(0x1A8)] public int Param; // appears to be a generic field that some addons use for storage
     [FieldOffset(0x1AC)] public uint ShowTransitionDuration;
     [FieldOffset(0x1B0)] public uint HideTransitionDuration;
     [BitField<UiFlags>(nameof(UiFlags), 0, 7)]
+    [BitField<bool>(nameof(DisableCloseOnLoadScreen), 24, 1)]
     [FieldOffset(0x1B4)] public uint Flags1B4; // set by SetFlag, bits 24-30 setting flags?!
     [FieldOffset(0x1B8)] private byte AddonParamUnknown1; // used in RaptureAtkUnitManager.vf18
     /// <remarks> Used for dialogs, context menus and other windows that cause inputs to be blocked. Checked in <see cref="ShouldIgnoreInputs"/>. </remarks>
@@ -133,6 +135,10 @@ public unsafe partial struct AtkUnitBase : ICreatable<AtkUnitBase> {
     /// <summary> Enables TextNodes to be populated (before OnSetup) </summary>
     public partial bool EnableTextNodePopulation { readonly get; set; }
 
+    /// <summary> Enables clip-aware collision selection for nodes with <see cref="AtkResNode.IsCollisionClipped"/>. </summary>
+    /// <remarks> Uses the nearest parent node with <see cref="NodeFlags.Clip"/>. </remarks>
+    public partial bool EnableCollisionClipping { readonly get; set; }
+
     /// <summary> Enable Filter (Modal window with backdrop) </summary>
     public partial bool EnableFilter { readonly get; set; }
 
@@ -141,6 +147,9 @@ public unsafe partial struct AtkUnitBase : ICreatable<AtkUnitBase> {
 
     /// <summary> Forces the addon to remain visible (but uninteractable) when using Toggle UI Display Mode </summary>
     public partial bool IgnoreUIDisplayMode { readonly get; set; }
+
+    /// <summary> If this is <see langword="true"/>, this window will hide for the load screen (<c>UIModule.LoadScreenHideUi</c>) instead of getting closed. </summary>
+    public partial bool DisableCloseOnLoadScreen { readonly get; set; }
 
     public uint DepthLayer {
         readonly get => BitOps.GetBits(Flags198, 16, 0b1111u);
@@ -183,7 +192,7 @@ public unsafe partial struct AtkUnitBase : ICreatable<AtkUnitBase> {
     [MemberFunction("E8 ?? ?? ?? ?? 41 C1 EF")]
     public partial AtkTextNode* GetTextNodeById(uint nodeId);
 
-    [MemberFunction("E8 ?? ?? ?? ?? 8D 53 16")]
+    [MemberFunction("E8 ?? ?? ?? ?? 41 0F 28 FB")]
     public partial AtkImageNode* GetImageNodeById(uint nodeId);
 
     [MemberFunction("E8 ?? ?? ?? ?? 8D 3C 36")]
@@ -192,7 +201,7 @@ public unsafe partial struct AtkUnitBase : ICreatable<AtkUnitBase> {
     [MemberFunction("E8 ?? ?? ?? ?? 45 33 FF 48 89 43")]
     public partial AtkComponentList* GetComponentListById(uint nodeId);
 
-    [MemberFunction("E8 ?? ?? ?? ?? 85 DD")]
+    [MemberFunction("E8 ?? ?? ?? ?? 85 DD 74")]
     public partial AtkComponentBase* GetComponentByNodeId(uint nodeId);
 
     public AtkComponentNode* GetComponentNodeById(uint nodeId) {
@@ -267,6 +276,9 @@ public unsafe partial struct AtkUnitBase : ICreatable<AtkUnitBase> {
 
     [MemberFunction("E8 ?? ?? ?? ?? 8D 56 0C 48 8B CF")]
     public partial AtkEvent* RegisterEvent(AtkEventType eventType, uint param, AtkEventListener* listener, AtkResNode* node);
+
+    [MemberFunction("E8 ?? ?? ?? ?? 45 33 F6 48 8D B3")]
+    public partial bool UnregisterEvent(AtkEventType eventType, uint param, AtkEventListener* listener);
 
     [VirtualFunction(3)]
     public partial bool Open(uint depthLayer);
