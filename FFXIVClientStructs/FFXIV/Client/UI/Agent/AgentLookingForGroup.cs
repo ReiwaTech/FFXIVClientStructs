@@ -39,6 +39,8 @@ public unsafe partial struct AgentLookingForGroup {
     [FieldOffset(0x3628), Obsolete("Use ListingAccountIdUInt64", true)] public uint ListingAccountId;
     [FieldOffset(0x3628)] public ulong ListingAccountIdUInt64; // Only populated while a Detailed listing is opened // TODO: rename back to ListingAccountId...
 
+    [FieldOffset(0x3638)] public uint JoinConfirmAddonId; // SelectYesno
+
     [FieldOffset(0x36B2)] public byte NumberOfListingsDisplayed;
 
     [FieldOffset(0x36B9)] public byte SearchAreaTab; // 0 Data Center, 1 World, 2 Private
@@ -59,6 +61,15 @@ public unsafe partial struct AgentLookingForGroup {
 
     [MemberFunction("40 55 53 41 54 41 57 48 8D AC 24 ?? ?? ?? ?? B8")]
     public partial void PopulateListingData(Detailed* listingData);
+
+    /// <summary>
+    /// Populates the UI fields for AddonLookingForGroupCondition with data from <see cref="StoredRecruitmentInfo"/>.
+    /// </summary>
+    /// <remarks>
+    /// Doesn't seem to respect the role flags, but seems to respect everything else.
+    /// </remarks>
+    [MemberFunction("48 89 5C 24 ?? 48 89 74 24 ?? 48 89 7C 24 ?? 55 41 54 41 55 41 56 41 57 48 8D AC 24 ?? ?? ?? ?? B8 ?? ?? ?? ?? E8 ?? ?? ?? ?? 48 2B E0 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 85 ?? ?? ?? ?? 8B 99")]
+    public partial void PopulateRecruitmentCriteriaPopup(bool a2, bool a3);
 
     [StructLayout(LayoutKind.Explicit, Size = 0x78)]
     public unsafe partial struct TreasureMapDetail {

@@ -51,6 +51,9 @@ public unsafe partial struct ILayoutInstance {
     [VirtualFunction(7)]
     public partial CStringPointer GetPrimaryPath();
 
+    [VirtualFunction(13)]
+    public partial Common.Math.SphereBounds* GetSphereBounds(Common.Math.SphereBounds* outSphereBounds);
+
     [VirtualFunction(14)]
     public partial Vector3* GetTranslation(Vector3* result);
 
@@ -159,14 +162,17 @@ public unsafe partial struct ILayoutInstance {
     public partial void SetTransformImpl(Transform* value);
 
     [VirtualFunction(72)]
-    public partial Vector4* GetBoundingSphereImpl(Vector4* result);
+    public partial Vector4* GetBoundingSphereImpl(Vector4* result); // TODO: use Common.Math.SphereBounds* instead of Vector4*
+
+    [VirtualFunction(73)]
+    public partial Common.Math.AxisAlignedBounds* GetAxisAlignedBoundsImpl(Common.Math.AxisAlignedBounds* outAlignedBounds);
+
+    [VirtualFunction(74)]
+    public partial Common.Math.OrientedBounds* GetOrientedBoundsImpl(Common.Math.OrientedBounds* outOrientedBounds);
 
     /// <summary>If we have a primary object and its been loaded. Basically HavePrimary() and IsPrimaryLoaded() in one call.</summary>
     [MemberFunction("E8 ?? ?? ?? ?? 3C ?? 75 ?? 8B D5")]
     public partial bool IsPrimaryReady();
-
-    // vf73: getWorldBB, uses AABB with padded vec3's
-    // vf74: get transform split into RT matrix + scale
 
     // [VirtualFunction(77)] ...
 }
@@ -292,15 +298,23 @@ public enum InstanceType : byte {
     Decal = 83,
     Unk84 = 84,
     Unk85 = 85,
-    ColliderLayer7 = 86,
-    ColliderLayer8 = 87,
-    ColliderLayer9 = 88,
-    ColliderLayer10 = 89,
+    WaterRange = 86,
+    ShowHideRange = 87,
+    GameContentsRange = 88,
+    EventEffectRange = 89,
     CullingBox = 90,
     Unk91 = 91,
     Unk92 = 92,
     VolumetricCloud = 93,
 
+    [Obsolete("Renamed to WaterRange")]
+    ColliderLayer7 = 86,
+    [Obsolete("Renamed to ShowHideRange")]
+    ColliderLayer8 = 87,
+    [Obsolete("Renamed to GameContentsRange")]
+    ColliderLayer9 = 88,
+    [Obsolete("Renamed to EventEffectRange")]
+    ColliderLayer10 = 89,
     [Obsolete("Renamed to CullingBox")]
     Culling = 90,
 }

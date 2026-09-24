@@ -29,9 +29,11 @@ public unsafe partial struct EventHandler {
     [FieldOffset(0xA0)] private ExcelSheet* UnkExcelSheet1;
     [FieldOffset(0xA8)] private ExcelSheetWaiter* UnkExcelSheetWaiter2;
     [FieldOffset(0xB0)] private ExcelSheet* UnkExcelSheet2;
-    [FieldOffset(0xB8)] private ExcelSheetWaiter* UnkExcelSheetWaiter3;
-    [FieldOffset(0xC0)] private ExcelSheet* UnkExcelSheet3;
-    [FieldOffset(0xC8)] private Utf8String UnkSheetName; // sheet set to UnkExcelSheet3, for FormatStringCallback?
+    [FieldOffset(0xB8)] public ExcelSheetWaiter* CustomDefineSheetWaiter;
+    [FieldOffset(0xC0)] public ExcelSheet* CustomDefineSheet;
+    [FieldOffset(0xC8)] public Utf8String CustomDefineSheetName; // for example: warp/WarpInnGridania
+
+    [FieldOffset(0x148)] public uint CustomDefineSheetRowCount;
 
     [FieldOffset(0x158)] private ExcelSheetWaiter* UnkExcelSheetWaiter4;
     [FieldOffset(0x160)] private ExcelSheet* UnkExcelSheet4; // TripleTriadCard, XBMBattleDetailAction
@@ -39,14 +41,26 @@ public unsafe partial struct EventHandler {
     [VirtualFunction(0)]
     public partial EventHandler* Dtor(byte freeFlags);
 
+    [VirtualFunction(8)]
+    public partial void ResetState(GameObject* sceneGameObject);
+
     [VirtualFunction(20)]
     public partial void ProcessEnterTerritory(ushort territoryTypeId);
 
     [VirtualFunction(25)]
     public partial void ProcessUIEvent(UIEventType type);
 
+    [VirtualFunction(28)]
+    public partial void EnterEvent(GameObject* sceneGameObject, byte eventState);
+
     [VirtualFunction(40)]
     public partial void ProcessYield(short scene, byte yieldId, int* intParams, byte intParamCount);
+
+    [VirtualFunction(52)]
+    public partial bool ProcessEventSceneTask(uint taskId);
+
+    [VirtualFunction(58)]
+    public partial void EndEvent(bool a2, uint a3, uint exitReason);
 
     [VirtualFunction(59)]
     public partial void ProcessFormatStringCallback(bool success, Utf8String* str, ulong callbackParam);
@@ -70,6 +84,12 @@ public unsafe partial struct EventHandler {
     [VirtualFunction(70)]
     public partial void CancelByPlayerMovement(bool a2, bool a3);
 
+    [VirtualFunction(89)]
+    public partial void HandleStartOrEndCommand(uint command);
+
+    [VirtualFunction(90)]
+    public partial void HandleMenuResult(int selectedOption, int menuType);
+
     // [VirtualFunction(76)]
     // public partial void ProcessListenItemCallback(?);
 
@@ -84,6 +104,17 @@ public unsafe partial struct EventHandler {
 
     [VirtualFunction(209)]
     public partial uint GetNameplateIconForObject(GameObject* gameObject);
+
+    /// <summary> If the GameObject from the EventHandler's perspective should be active. For example, this can control whether GimmickRects are active. </summary>
+    [VirtualFunction(213)]
+    public partial bool IsActive(GameObject* gameObject);
+
+    /// <summary> Sets the TargetableStatus update flag for every GameObject this EventHandler owns. </summary>
+    [VirtualFunction(217)]
+    public partial void UpdateTargetableStatus();
+
+    [VirtualFunction(250)]
+    public partial bool ShouldDismissOrnament();
 
     /// <summary>Changes the currently playing timelines based on the difference between oldSharedTimelineState and newSharedTimelineState.</summary>
     /// <param name="gameObject">The game object to update.</param>

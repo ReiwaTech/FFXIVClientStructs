@@ -9,9 +9,11 @@ namespace FFXIVClientStructs.FFXIV.Client.UI.Agent;
 // Client::UI::Agent::AgentGearSet
 //   Client::UI::Agent::AgentInterface
 //     Component::GUI::AtkModuleInterface::AtkEventInterface
+//   Client::UI::Misc::ConfigModule::ConfigEventInterface
 [Agent(AgentId.GearSet)]
 [GenerateInterop]
 [Inherits<AgentInterface>]
+[Inherits<ConfigModule.ConfigEventInterface>]
 [StructLayout(LayoutKind.Explicit, Size = 0xBD0)]
 public unsafe partial struct AgentGearSet {
     [FieldOffset(0x48), FixedSizeArray] internal FixedSizeArray14<ContextMenuParam> _contextMenuParams;
@@ -203,12 +205,17 @@ public unsafe partial struct AgentGearSet {
     public unsafe partial struct GearsetCharaView {
         [FieldOffset(0x318)] public bool UpdateVisibility;
         [FieldOffset(0x319)] public bool UpdateItems;
-        [FieldOffset(0x31A)] public bool HideVisor;
-        [FieldOffset(0x31B)] public bool HideWeapon;
-        [FieldOffset(0x31C)] public bool CloseVisor;
+        [FieldOffset(0x31A)] public bool HeadgearHidden;
+        [FieldOffset(0x31B)] public bool WeaponHidden;
+        [FieldOffset(0x31C)] public bool VisorClosed;
+        [FieldOffset(0x31D)] public bool VieraEarsHidden;
         [FieldOffset(0x31F)] public bool DrawWeapon;
         [FieldOffset(0x320)] public bool CharacterDisplayMode;
 
         [FieldOffset(0x328)] public GearsetEntry* Gearset;
+
+        [FieldOffset(0x31A), Obsolete("Renamed to HeadgearHidden")] public bool HideVisor;
+        [FieldOffset(0x31B), Obsolete("Renamed to WeaponHidden")] public bool HideWeapon;
+        [FieldOffset(0x31C), Obsolete("Renamed to VisorClosed")] public bool CloseVisor;
     }
 }
